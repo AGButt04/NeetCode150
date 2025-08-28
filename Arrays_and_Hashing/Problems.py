@@ -1,6 +1,8 @@
 # This file has all the problems in the Arrays & Hashing
 # section of the NeetCode150 with the explanations.
 
+from collections import defaultdict
+
 # Problem-1 (Contains Duplicate):
 def hasDuplicate(nums):
     duplicates = {}
@@ -68,6 +70,17 @@ def groupAnagrams(strs):
 
     return groupings
 
+# Problem-3 (Group Anagrams Simpler Approach)
+def groupAnagramsII(strs):
+    groups = defaultdict(list)
+
+    for st in strs:
+        string = sorted(st)
+        key = "".join(string)
+        groups[key].append(st)
+
+    return list(groups.values())
+
 if __name__ == '__main__':
     strs = ["act", "pots", "tops", "cat", "stop", "hat"]
-    print(groupAnagrams(strs))
+    print(groupAnagramsII(strs))
