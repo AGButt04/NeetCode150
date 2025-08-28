@@ -39,3 +39,35 @@ def twoSum(nums, target):
         indexes[nums[i]] = i
 
     return None
+
+# Problem-3 (Group Anagrams)
+def groupAnagrams(strs):
+    frequencies = []
+    groupings = []
+    grouped = [False] * len(strs)
+
+    for st in strs:
+        curr_dict = {}
+        for char in st:
+            curr_dict[char] = curr_dict.get(char, 0) + 1
+
+        frequencies.append(curr_dict)
+
+    for i, st in enumerate(strs):
+        if grouped[i]:
+            continue
+
+        curr_list = [st]
+        grouped[i] = True
+        for j in range(i + 1, len(strs)):
+            if frequencies[j] == frequencies[i] and not grouped[j]:
+                curr_list.append(strs[j])
+                grouped[j] = True
+
+        groupings.append(curr_list)
+
+    return groupings
+
+if __name__ == '__main__':
+    strs = ["act", "pots", "tops", "cat", "stop", "hat"]
+    print(groupAnagrams(strs))
