@@ -26,3 +26,16 @@ def isAnagram(s, t):
 
     return freq_1 == freq_2
 
+# Problem-3 (Two Sum)
+def twoSum(nums, target):
+    indexes = {}
+
+    for i in range(len(nums)):
+        check = target - nums[i]
+
+        if check in indexes:
+            return [indexes[check], i]
+
+        indexes[nums[i]] = i
+
+    return None
