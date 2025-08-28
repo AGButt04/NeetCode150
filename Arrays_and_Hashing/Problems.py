@@ -2,6 +2,7 @@
 # section of the NeetCode150 with the explanations.
 
 from collections import defaultdict
+import heapq
 
 # Problem-1 (Contains Duplicate):
 def hasDuplicate(nums):
@@ -42,7 +43,7 @@ def twoSum(nums, target):
 
     return None
 
-# Problem-3 (Group Anagrams)
+# Problem-4 (Group Anagrams)
 def groupAnagrams(strs):
     frequencies = []
     groupings = []
@@ -70,7 +71,7 @@ def groupAnagrams(strs):
 
     return groupings
 
-# Problem-3 (Group Anagrams Simpler Approach)
+# Problem-4 (Group Anagrams Simpler Approach)
 def groupAnagramsII(strs):
     groups = defaultdict(list)
 
@@ -80,6 +81,26 @@ def groupAnagramsII(strs):
         groups[key].append(st)
 
     return list(groups.values())
+
+# Problem-5 (Top k frequent Elements)
+def topKFrequent(nums, k):
+    frequencies = {}
+    heap = []
+    k_freq = []
+
+    for n in nums:
+        frequencies[n] = frequencies.get(n, 0) + 1
+
+    for key, value in frequencies.items():
+        heapq.heappush(heap, (value, key))
+        if len(heap) > k:
+            heapq.heappop(heap)
+
+    for key, value in heap:
+        k_freq.append(value)
+
+    return k_freq
+
 
 if __name__ == '__main__':
     strs = ["act", "pots", "tops", "cat", "stop", "hat"]
