@@ -106,6 +106,9 @@ def groupAnagrams(strs):
 
         groupings.append(curr_list)  # add the completed group
 
+    # Time complexity: O(n * L) (Build Dict) + O(n^2 * L) comparing => O(n^2 * L)
+    # Space complexity: O(n * L) (Map) + O(n) (Grouped) + O(n * L) groupings => O(n * L)
+
     return groupings
 
 
@@ -120,6 +123,8 @@ def groupAnagramsII(strs):
         groups[key].append(st)  # group words by key
 
     # Step 2: Return all groups
+    # Time complexity: O(n) => As it walks through the array once
+    # Space complexity: O(n) => As we are creating a dictionary side by side
     return list(groups.values())
 
 # Problem-5 (Top k frequent Elements)
@@ -152,8 +157,8 @@ def topKFrequent(nums, k):
     for freq, num in heap:
         k_freq.append(num)
 
-    # Time complexity: O(n) => Populate Dictionary + O(n log n) (Populate heap)
-    # + O(k) (Populating the list) =>> O(n + n log n + k) => O(n log n)
+    # Time complexity: O(n) => Populate Dictionary + O(n log k) (Populate heap)
+    # + O(k) (Populating the list) =>> O(n + n log k + k) => O(n log k)
     # Space complexity: O(n) (Dictionary) + O(n) (Heap) + O(k) (List) => O(n + k)
 
     return k_freq
