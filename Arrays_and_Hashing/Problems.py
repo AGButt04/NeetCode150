@@ -171,7 +171,6 @@ def encode(strs):
     string = ""
     for st in strs:
         string += str(len(st)) + "#" + st
-
     return string
 
 def decode(s):
@@ -193,10 +192,34 @@ def decode(s):
         string = s[start:end]
         strs.append(string)
         i = end
-
     return strs
 
+# Problem-7 (Product except self)
+def productExceptSelf(nums):
+    if not nums:
+        return []
+
+    products = [0] * len(nums)
+    product = 1
+    is_zero = False
+
+    for n in nums:
+        if n == 0:
+            is_zero = True
+            continue
+        product *= n
+
+    for i in range(len(nums)):
+        if is_zero:
+            if nums[i] == 0:
+                products[i] = product
+        else:
+            products[i] = product // nums[i]
+
+    return products
 
 if __name__ == '__main__':
     strs = ["act", "pots", "tops", "cat", "stop", "hat"]
+    nums = [1, 2, 4, 6]
     print(groupAnagramsII(strs))
+    print(productExceptSelf(nums))
