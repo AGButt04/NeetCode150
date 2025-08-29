@@ -163,6 +163,39 @@ def topKFrequent(nums, k):
 
     return k_freq
 
+# Problem-6 (Encode and Decode String):
+def encode(strs):
+    if not strs:
+        return ""
+
+    string = ""
+    for st in strs:
+        string += str(len(st)) + "#" + st
+
+    return string
+
+def decode(s):
+    if not str:
+        return []
+
+    strs = []
+    i = 0
+
+    while i < len(s):
+        j = i
+        while s[j] != "#":
+            j += 1
+
+        length = int(s[i:j])
+        start = j + 1
+        end = start + length
+
+        string = s[start:end]
+        strs.append(string)
+        i = end
+
+    return strs
+
 
 if __name__ == '__main__':
     strs = ["act", "pots", "tops", "cat", "stop", "hat"]
