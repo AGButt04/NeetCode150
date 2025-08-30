@@ -168,57 +168,95 @@ def encode(strs):
     # In this problem, we are just designing an algorithm that will encode
     # and decode a list of strings into a string and decode it using same algorithm.
     if not strs:
+        # If the input is empty list, just return empty string
         return ""
 
+    # Start our string as empty
     string = ""
     for st in strs:
+        # Loop over all the strings in the strings list, and add the length
+        # of the word with '#' symbol as the seperator beetween encoded string
+        # and the actual word and then add the word at the end of the string
         string += str(len(st)) + "#" + st
+
+    # return the encoded string
+    # Time complexity: O(n) => As it walks through the array once
+    # Space complexity: O(n) => As we are creating a encoded string.
     return string
 
 def decode(s):
+    # If the input string is empty, just return empty list
     if not str:
         return []
 
+    # Start with the empty list.
     strs = []
-    i = 0
+    i = 0 # Start the index
 
+    # Loop start from the index = 0
     while i < len(s):
+        # j index starting from i to extract the word
         j = i
+        # Looping while we hit the separator, so that we
+        # stand at starting index of the word.
         while s[j] != "#":
             j += 1
-
+        # length of the word would be that string from i to j as
+        # when we encoded, we put its length before for a reason
         length = int(s[i:j])
+
+        # Now the starting position of word would be j + 1, and
+        # ending would be start plus the length of the word we got.
         start = j + 1
         end = start + length
 
+        # Slice the substring from start to end and append it to the list
         string = s[start:end]
         strs.append(string)
-        i = end
+        i = end # Bump the index i to end
+
+    # return the list
+    # Time complexity: O(n) => As it walks through the String once
+    # Space complexity: O(n) => As we are creating a decoded List.
     return strs
 
 # Problem-7 (Product except self)
 def productExceptSelf(nums):
+    # In this problem, we are trying to create an array where each
+    # index will have the product of all the elements of array except self
+
     if not nums:
+        # return empty list if empty array input
         return []
 
+    # Make an array to return by putting all zeros initially
     products = [0] * len(nums)
-    product = 1
-    zero_count = 0
+    product = 1 # Start the product of the whole array from 1
+    zero_count = 0 # We'll need to keep track of the zeros in array
 
     for n in nums:
+        # Creating the product and counting zeros
         if n == 0:
             zero_count += 1
             continue
         product *= n
 
+    # If there are more than 1 zeros, then the whole array is just going to
+    # be all zeros as at each position, one or two zeros will be in product
     if zero_count > 1:
+        # Just return products array (all zeros)
         return products
 
+    # Loop over the nums array to create the products array.
     for i, n in enumerate(nums):
+        # Check if there is a zero in the array, then logic is a little different
         if zero_count > 0:
+            # If the current element is zero, then only this position will have product
             if n == 0:
                 products[i] = product
+            # All other indexes will have zeros as zero will come in their product.
         else:
+            # Else just divide the whole product with the element at the index in nums.
             products[i] = product // n
 
     return products
@@ -307,3 +345,4 @@ if __name__ == '__main__':
     nums = [1, 2, 4, 6]
     print(groupAnagramsII(strs))
     print(productExceptSelf(nums))
+    print(encode(strs))
