@@ -165,6 +165,8 @@ def topKFrequent(nums, k):
 
 # Problem-6 (Encode and Decode String):
 def encode(strs):
+    # In this problem, we are just designing an algorithm that will encode
+    # and decode a list of strings into a string and decode it using same algorithm.
     if not strs:
         return ""
 
@@ -201,22 +203,69 @@ def productExceptSelf(nums):
 
     products = [0] * len(nums)
     product = 1
-    is_zero = False
+    zero_count = 0
 
     for n in nums:
         if n == 0:
-            is_zero = True
+            zero_count += 1
             continue
         product *= n
 
-    for i in range(len(nums)):
-        if is_zero:
-            if nums[i] == 0:
+    if zero_count > 1:
+        return products
+
+    for i, n in enumerate(nums):
+        if zero_count > 0:
+            if n == 0:
                 products[i] = product
         else:
-            products[i] = product // nums[i]
+            products[i] = product // n
 
     return products
+
+# Problem-8 (Valid Sudoku Board)
+def isValidSudoku(board):
+    m = 9
+    n = 9
+    # Checking rows:
+    for i in range(m):
+        duplicates = set()
+        for j in range(n):
+            elem = board[i][j]
+            if elem == ".":
+                continue
+            if elem in duplicates:
+                return False
+
+            duplicates.add(elem)
+    # Checking columns
+    for i in range(m):
+        duplicates = set()
+        for j in range(n):
+            elem = board[j][i]
+            if elem == ".":
+                continue
+            if elem in duplicates:
+                return False
+
+            duplicates.add(elem)
+    # Checking 3x3 Boxes
+    for square in range(m):
+        duplicates = set()
+        for i in range(3):
+            for j in range(3):
+                row = (square // 3) * 3 + i
+                col = (square % 3) * 3 + j
+
+                elem = board[row][col]
+                if elem == ".":
+                    continue
+                if elem in duplicates:
+                    return False;
+
+                duplicates.add(elem)
+
+    return True
 
 if __name__ == '__main__':
     strs = ["act", "pots", "tops", "cat", "stop", "hat"]
