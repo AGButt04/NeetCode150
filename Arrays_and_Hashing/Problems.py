@@ -267,6 +267,41 @@ def isValidSudoku(board):
 
     return True
 
+# Problem-9 (Longest Consecutive Sequence)
+def longestConsecutive(nums):
+    maxSeq = 0
+    nums.sort()
+    nums_set = set(nums)
+
+    for i in range(len(nums)):
+        currSeq = 1
+        curr_num = nums[i]
+        for j in range(i + 1, len(nums)):
+            if nums[j] - curr_num == 1:
+                currSeq += 1
+                curr_num = nums[j]
+
+        maxSeq = max(maxSeq, currSeq)
+
+    return maxSeq
+
+# Problem-9 (Longest Consecutive Sequence - Optimal)
+def longestConsecutive(nums):
+    maxSeq = 0
+    numsSet = set(nums)
+
+    for i, num in enumerate(nums):
+        if num - 1 not in numsSet:
+            currNum = num + 1
+            currSeq = 1
+            while currNum in numsSet:
+                currSeq += 1
+                currNum += 1
+
+            maxSeq = max(maxSeq, currSeq)
+
+    return maxSeq
+
 if __name__ == '__main__':
     strs = ["act", "pots", "tops", "cat", "stop", "hat"]
     nums = [1, 2, 4, 6]
