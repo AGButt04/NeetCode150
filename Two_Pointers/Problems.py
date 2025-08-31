@@ -70,6 +70,27 @@ def threeSum(nums):
 
     return triples
 
+def maxArea(heights):
+    maxA = 0
+    left = 0
+    right = len(heights) - 1
+
+    while left < right:
+        height = min(heights[left], heights[right])
+        width = right - left
+        currArea = height * width
+        maxA = max(maxA, currArea)
+
+        if heights[left] > heights[right]:
+            right -= 1
+        elif heights[left < heights[right]]:
+            left += 1
+        else:
+            left += 1
+            right -= 1
+
+    return maxA
+
 if __name__ == '__main__':
     s = "Was it a car or a cat I saw?"
     print(isPalindrome(s))
