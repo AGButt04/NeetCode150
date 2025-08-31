@@ -22,6 +22,24 @@ def isPalindrome(s):
 
     return True
 
+def twoSum(numbers, target):
+    left = 0
+    right = len(numbers)-1
+
+    while left < right:
+        num1 = numbers[left]
+        num2 = numbers[right]
+        current_sum = num1 + num2
+
+        if current_sum == target:
+            return [left+1, right+1]
+        elif current_sum > target:
+            right -= 1
+        else:
+            left += 1
+
+    return None
+
 
 
 if __name__ == '__main__':
