@@ -40,7 +40,35 @@ def twoSum(numbers, target):
 
     return None
 
+def threeSum(nums):
+    triples = []
+    nums.sort()
 
+    for i, num in enumerate(nums):
+        if i > 0 and nums[i] == nums[i - 1]:
+            continue
+
+        left = i + 1
+        right = len(nums) - 1
+        while left < right:
+            curr_sum = num + nums[left] + nums[right]
+
+            if curr_sum == 0:
+                triples.append([num, nums[left], nums[right]])
+                left += 1
+                right -= 1
+                while left < right and nums[left] == nums[left - 1]:
+                    left += 1
+
+                while right > left and nums[right] == nums[right + 1]:
+                    right -= 1
+
+            elif curr_sum > 0:
+                right -= 1
+            else:
+                left += 1
+
+    return triples
 
 if __name__ == '__main__':
     s = "Was it a car or a cat I saw?"
