@@ -263,82 +263,103 @@ def productExceptSelf(nums):
 
 # Problem-8 (Valid Sudoku Board)
 def isValidSudoku(board):
-    m = 9
-    n = 9
-    # Checking rows:
+    m = 9  # Number of rows
+    n = 9  # Number of columns
+
+    # Step 1: Check all rows for duplicates
     for i in range(m):
-        duplicates = set()
+        duplicates = set()  # Track seen numbers in current row
         for j in range(n):
             elem = board[i][j]
-            if elem == ".":
+            if elem == ".":  # Skip empty cells
                 continue
-            if elem in duplicates:
+            if elem in duplicates:  # Duplicate found in row
                 return False
+            duplicates.add(elem)  # Add to seen set
 
-            duplicates.add(elem)
-    # Checking columns
+    # Step 2: Check all columns for duplicates
     for i in range(m):
-        duplicates = set()
+        duplicates = set()  # Track seen numbers in current column
         for j in range(n):
-            elem = board[j][i]
-            if elem == ".":
+            elem = board[j][i]  # Note: j is row, i is column
+            if elem == ".":  # Skip empty cells
                 continue
-            if elem in duplicates:
+            if elem in duplicates:  # Duplicate found in column
                 return False
+            duplicates.add(elem)  # Add to seen set
 
-            duplicates.add(elem)
-    # Checking 3x3 Boxes
-    for square in range(m):
-        duplicates = set()
-        for i in range(3):
-            for j in range(3):
-                row = (square // 3) * 3 + i
-                col = (square % 3) * 3 + j
+    # Step 3: Check all 3x3 sub-boxes for duplicates
+    for square in range(m):  # Iterate through all 9 sub-boxes
+        duplicates = set()  # Track seen numbers in current sub-box
+        for i in range(3):  # 3 rows in each sub-box
+            for j in range(3):  # 3 columns in each sub-box
+                # Calculate actual board position from sub-box coordinates
+                row = (square // 3) * 3 + i  # Top-left row of box + offset
+                col = (square % 3) * 3 + j  # Top-left col of box + offset
 
                 elem = board[row][col]
-                if elem == ".":
+                if elem == ".":  # Skip empty cells
                     continue
-                if elem in duplicates:
-                    return False;
+                if elem in duplicates:  # Duplicate found in sub-box
+                    return False
+                duplicates.add(elem)  # Add to seen set
 
-                duplicates.add(elem)
+    # Time Complexity => O(n^2) for all three nested loops
+    # Space Complexity => O(n) just for the set we create for each loop.
+    return True  # All checks passed
 
-    return True
-
-# Problem-9 (Longest Consecutive Sequence)
+# Problem-9 (Longest Consecutive Sequence - Brute Force)
 def longestConsecutive(nums):
+    if not nums:  # Handle empty array
+        return 0
+
     maxSeq = 0
-    nums.sort()
-    nums_set = set(nums)
+    nums.sort()  # Sort the array first
 
     for i in range(len(nums)):
-        currSeq = 1
-        curr_num = nums[i]
+        currSeq = 1  # Current sequence length starts at 1
+        curr_num = nums[i]  # Starting number for this sequence
+
+        # Check consecutive numbers starting from current position
         for j in range(i + 1, len(nums)):
-            if nums[j] - curr_num == 1:
+            if nums[j] == curr_num: continue
+            if nums[j] - curr_num == 1:  # Found next consecutive number
                 currSeq += 1
-                curr_num = nums[j]
+                curr_num = nums[j]  # Update current number
 
-        maxSeq = max(maxSeq, currSeq)
+        maxSeq = max(maxSeq, currSeq)  # Update maximum sequence found
 
+    # Time Complexity: O(n²) - nested loops through the array
+    # Space Complexity: O(n) - for the set (though not optimally used)
     return maxSeq
+
 
 # Problem-9 (Longest Consecutive Sequence - Optimal)
 def longestConsecutive(nums):
+    if not nums:  # Handle empty array
+        return 0
+
     maxSeq = 0
-    numsSet = set(nums)
+    numsSet = set(nums)  # Convert to set for O(1) lookups
 
     for i, num in enumerate(nums):
+        # Only start counting from the beginning of a sequence
+        # If (num - 1) exists, then num is not the start of a sequence
         if num - 1 not in numsSet:
-            currNum = num + 1
-            currSeq = 1
+            currNum = num + 1  # Next number to look for
+            currSeq = 1  # Current sequence length (starts with num itself)
+
+            # Keep extending the sequence while consecutive numbers exist
             while currNum in numsSet:
-                currSeq += 1
-                currNum += 1
+                currSeq += 1  # Increment sequence length
+                currNum += 1  # Look for next consecutive number
 
-            maxSeq = max(maxSeq, currSeq)
+            maxSeq = max(maxSeq, currSeq)  # Update maximum sequence found
 
+    # Time Complexity: O(n) - each number is visited at most twice (once in outer loop, once in inner while loop)
+    # Space Complexity: O(n) - for the hash set storing all numbers
     return maxSeq
+
 
 if __name__ == '__main__':
     strs = ["act", "pots", "tops", "cat", "stop", "hat"]
