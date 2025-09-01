@@ -203,10 +203,10 @@ def trap(height):
         # Push the current index (potential boundary) onto the stack
         stack.append(index)
 
-    # Return the computed area so far
     # Time complexity: O(n) for outer loop, O(n) for inner loop, as the indices will
     # popped, and pushed only once so while runs at most n times. => O(n+n) = O(2n) => O(n)
     # Space complexity: O(n) for the worst case if we had to store all indices on stack.
+    # Return the computed area so far
     return maxArea
 
 
