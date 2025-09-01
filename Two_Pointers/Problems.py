@@ -3,7 +3,6 @@
 
 import string
 
-# Problem-1:
 def isPalindrome(s):
     """
    Valid Palindrome - Check if a string is a palindrome ignoring case and non-alphanumeric characters.
@@ -162,6 +161,58 @@ def maxArea(heights):
     # Space Complexity: O(1) - Only using constant extra space
     return maxA
 
+
+def trap(height):
+    """
+    Trapping Rain Water
+    Given an array of non-negative integers representing an elevation map where the
+    width of each bar is 1, compute how much water can be trapped after raining.
+    Uses a monotonic decreasing stack to identify "valleys" where water can accumulate.
+    Args:
+        height (List[int]): Array of integers representing elevation heights
+    Returns:
+        int: Total amount of trapped water (number of water blocks)
+        """
+
+    stack = []       # stack will hold indices of the bars (monotonic decreasing stack)
+    maxArea = 0      # total water trapped
+
+    for index, right in enumerate(height):
+        # While the current bar is taller than the bar at the stack top,
+        # it means we found a "right boundary" that can trap water
+        while stack and height[stack[-1]] <= right:
+            middle = stack.pop()   # valley (bottom of the container)
+
+            if stack:  # Only trap water if there's a left boundary still in the stack
+                left_boundary = height[stack[-1]]
+
+                # Height of trapped water is limited by the shorter of the two walls
+                # minus the height of the bottom (middle)
+                length = min(right, left_boundary) - height[middle]
+
+                # Width is the distance between left and right boundaries,
+                # minus 1 to exclude the walls themselves
+                width = index - stack[-1] - 1
+
+                # Area = water blocks trapped above this "middle" valley
+                currArea = length * width
+
+                # Add to total water trapped
+                maxArea += currArea
+
+        # Push the current index (potential boundary) onto the stack
+        stack.append(index)
+
+    # Return the computed area so far
+    # Time complexity: O(n) for outer loop, O(n) for inner loop, as the indices will
+    # popped, and pushed only once so while runs at most n times. => O(n+n) = O(2n) => O(n)
+    # Space complexity: O(n) for the worst case if we had to store all indices on stack.
+    return maxArea
+
+
+
 if __name__ == '__main__':
     s = "Was it a car or a cat I saw?"
+    height = [0, 2, 0, 3, 1, 0, 1, 3, 2, 1]
+    print(trap(height))
     print(isPalindrome(s))
