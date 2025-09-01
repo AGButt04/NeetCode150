@@ -3,23 +3,36 @@
 
 import string
 
+# Problem-1:
 def isPalindrome(s):
-    st = s.replace(' ', '')
-    st = st.lower()
+    # In this problem, we are just checking if a given string is a palindrome or not
+    # For that, we will use two pointers approach, where we will start both pointers
+    # from both ends of the string and walk them towards each other char by char.
+
+    st = s.replace(' ', '') # Getting rid of all the whitespaces
+    st = st.lower()         # Lower casing the whole string for convenience
+    # This is the important where we are replacing all the punctuations
+    # with the empty string so that it does not bother the algorithm.
     translator = str.maketrans('', '', string.punctuation)
     st = st.translate(translator)
-    left = 0
-    right = len(st) - 1
+    left = 0            # Starting from the first index
+    right = len(st) - 1 # Starting from last index
 
+    # Loop until the pointers have met
     while left < right:
         char = st[left]
         ch = st[right]
+        # If the characters at both places aren't same, return False
         if char != ch:
             return False
 
+        # Move pointers closer
         left += 1
         right -= 1
 
+    # return true if no different characters found
+    # Time complexity: O(n) => All the operations are linear, no nesting
+    # Space complexity: O(1) as we are not storing anything additional
     return True
 
 def twoSum(numbers, target):
