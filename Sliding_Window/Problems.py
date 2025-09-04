@@ -157,3 +157,36 @@ def characterReplacement(s, k):
     # - At most 26 different characters (English alphabet)
     return maxlen
 
+def minWindow(s, t):
+    tMap = {}
+    sMap = {}
+    left = 0
+    minWindow = ""
+
+    for char in t:
+        tMap[char] = tMap.get(char, 0) + 1
+
+    need = len(tMap)
+    have = 0
+    for right, char in enumerate(s):
+        if char in tMap:
+            sMap[char] = sMap.get(char, 0) + 1
+            if sMap[char] == tMap[char]:
+                have += 1
+
+        while need == have:
+            if not minWindow or (right - left + 1) < len(minWindow):
+                minWindow = s[left: right + 1]
+
+            ch = s[left]
+            if ch in sMap:
+                sMap[ch] -= 1
+                if sMap[ch] < tMap[ch]:
+                    have -= 1
+                if sMap[ch] == 0:
+                    del sMap[ch]
+
+            left += 1
+
+    return minWindow
+
