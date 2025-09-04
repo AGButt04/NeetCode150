@@ -56,5 +56,31 @@ def lengthOfLongestSubstring(s):
         maxLength = max(maxLength, length)
 
     # Time Complexity: O(n) - Each character visited at most twice (once by each pointer)
-    # Space Complexity: O(min(m,n)) - HashMap stores at most min(alpha
+    # Space Complexity: O(min(m,n)) - HashMap stores at most min(alphabet_size, string length)
     return maxLength
+
+def checkInclusion(s1, s2):
+    if len(s1) > len(s2): return False
+
+    s1Map = {}
+    s2Map = {}
+    length = len(s1)
+
+    for char in s1:
+        s1Map[char] = s1Map.get(char, 0) + 1
+
+    for i in range(length):
+        s2Map[s2[i]] = s2Map.get(s2[i], 0) + 1
+
+    for i in range(length, len(s2)):
+        if s1Map == s2Map:
+            return True
+
+        char = s2[i - length]
+        s2Map[char] = s2Map[char] - 1
+        if s2Map[char] == 0:
+            del s2Map[char]
+
+        s2Map[s2[i]] = s2Map.get(s2[i], 0) + 1
+
+    return s1Map == s2Map
