@@ -158,56 +158,102 @@ def characterReplacement(s, k):
     return maxlen
 
 def minWindow(s, t):
-    tMap = {}
-    sMap = {}
-    left = 0
-    minWindow = ""
+    """
+        Minimum Window Substring
+        Find the minimum window in s that contains all characters in t.
 
+        Args:
+            s: Source string to search in
+            t: Target string containing required characters
+
+        Returns:
+            str: Minimum window substring, empty string if no valid window exists
+    """
+    tMap = {}  # Target character frequencies (what we need)
+    sMap = {}  # Current window character frequencies (what we have)
+    left = 0  # Left boundary of sliding window
+    minWindow = ""  # Store the minimum valid window found
+
+    # Build frequency map for target string t
     for char in t:
         tMap[char] = tMap.get(char, 0) + 1
 
-    need = len(tMap)
-    have = 0
+    need = len(tMap)  # Number of unique characters we need to satisfy
+    have = 0  # Number of unique characters currently satisfied
+
+    # Expand window by moving right pointer
     for right, char in enumerate(s):
+        # Add character to current window if it's needed
         if char in tMap:
             sMap[char] = sMap.get(char, 0) + 1
+            # Check if this character's requirement is now fully satisfied
             if sMap[char] == tMap[char]:
                 have += 1
 
-        while need == have:
+        # Try to contract window while maintaining all requirements
+        while need == have:  # All requirements satisfied
+            # Update minimum window if current is smaller
             if not minWindow or (right - left + 1) < len(minWindow):
                 minWindow = s[left: right + 1]
 
+            # Remove leftmost character from window
             ch = s[left]
             if ch in sMap:
                 sMap[ch] -= 1
+                # Check if removing this character breaks a requirement
                 if sMap[ch] < tMap[ch]:
-                    have -= 1
+                    have -= 1  # Lost satisfaction for this character
+                # Clean up map when count reaches 0
                 if sMap[ch] == 0:
                     del sMap[ch]
 
-            left += 1
+            left += 1  # Move left boundary right (contract window)
+
+    # Time complexity: O(m) (tMap populate) + O(n) Main Logic => The inner loop will visit twice
+    # for all the characters so it makes it amortized linear => O(n)
+    # Space Complexity: O(m) (tMap) + O(m) (sMap) => O(m)
 
     return minWindow
 
 def maxSlidingWindow(nums, k):
-    maxes = []
-    currMax = 0
-    left = 0
+    """
+        Sliding Window Maximum
+        Find the maximum element in every sliding window of size k.
 
+        Args:
+            nums: Array of integers
+            k: Size of sliding window
+
+        Returns:
+            List[int]: Maximum element in each window position
+
+        Note: This implementation has a performance issue - see comments below.
+    """
+    maxes = []  # Store maximum for each window position
+    currMax = 0  # Track maximum in current window
+    left = 0  # Left boundary of window
+
+    # Initialize first window and find its maximum
     for i in range(k):
         currMax = max(currMax, nums[i])
 
+    # Slide window through remaining positions
     for right in range(k, len(nums)):
-        maxes.append(currMax)
-        left += 1
+        maxes.append(currMax)  # Record maximum of previous window
+        left += 1  # Move window forward
 
+        # Check if new element becomes the maximum
         if nums[right] > currMax:
             currMax = nums[right]
-        if nums[left - 1] == currMax:
-            currMax = max(nums[left: right + 1])
 
-    maxes.append(currMax)
+        # PERFORMANCE ISSUE: If the element leaving the window was the maximum,
+        # we recalculate max for entire current window
+        if nums[left - 1] == currMax:
+            currMax = max(nums[left: right + 1])  # O(k) operation!
+
+    # Time Complexity: O(n) outer loop, O(k) (Finding max) => O(n * k)
+    # Space Complexity: O(n) for the maxes array.
+    maxes.append(currMax)  # Don't forget the final window
     return maxes
 
 
