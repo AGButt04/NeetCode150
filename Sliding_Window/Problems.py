@@ -190,3 +190,24 @@ def minWindow(s, t):
 
     return minWindow
 
+def maxSlidingWindow(nums, k):
+    maxes = []
+    currMax = 0
+    left = 0
+
+    for i in range(k):
+        currMax = max(currMax, nums[i])
+
+    for right in range(k, len(nums)):
+        maxes.append(currMax)
+        left += 1
+
+        if nums[right] > currMax:
+            currMax = nums[right]
+        if nums[left - 1] == currMax:
+            currMax = max(nums[left: right + 1])
+
+    maxes.append(currMax)
+    return maxes
+
+
