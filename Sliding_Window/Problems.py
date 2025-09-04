@@ -60,45 +60,100 @@ def lengthOfLongestSubstring(s):
     return maxLength
 
 def checkInclusion(s1, s2):
-    if len(s1) > len(s2): return False
+    """
+    Permutation in String (Sliding Window)
+    Check if any permutation of s1 is a substring of s2.
+    Args:
+        s1: Pattern string to find permutation of
+        s2: Text string to search in
+    Returns:
+        bool: True if any permutation of s1 exists as substring in s2
+    """
+    # Early termination: s1 cannot fit in s2
+    if len(s1) > len(s2):
+        return False
 
-    s1Map = {}
-    s2Map = {}
-    length = len(s1)
+    s1Map = {}  # Character frequency map for s1 (target pattern)
+    s2Map = {}  # Character frequency map for current sliding window
+    length = len(s1)  # Fixed window size
 
+    # Build frequency map for s1 (the pattern we're looking for)
     for char in s1:
         s1Map[char] = s1Map.get(char, 0) + 1
 
+    # Initialize sliding window with first 'length' characters of s2
     for i in range(length):
         s2Map[s2[i]] = s2Map.get(s2[i], 0) + 1
 
+    # Slide the window through the rest of s2
     for i in range(length, len(s2)):
+        # Check if current window matches s1's character distribution
         if s1Map == s2Map:
             return True
 
-        char = s2[i - length]
+        # Slide window: remove leftmost character (going out of window)
+        char = s2[i - length]  # Character leaving the window
         s2Map[char] = s2Map[char] - 1
         if s2Map[char] == 0:
-            del s2Map[char]
+            del s2Map[char]  # Remove key when count reaches 0 for clean comparison
 
+        # Add new rightmost character (entering the window)
         s2Map[s2[i]] = s2Map.get(s2[i], 0) + 1
 
+    # Time Complexity: O(n + m) where n = len(s1), m = len(s2)
+    # - Building s1Map: O(n)
+    # - Initial window setup: O(n)
+    # - Sliding through remaining characters: O(m - n)
+    # - HashMap comparisons: O(1) average case due to limited alphabet size
+    # Space Complexity: O(n) for the frequency maps (at most 26 characters each)
+
+    # Check the final window position (crucial - don't forget this!)
     return s1Map == s2Map
 
 def characterReplacement(s, k):
-    count = {}
-    maxlen = 0
-    maxfreq = 0
-    left = 0
+    """
+    Longest Repeating Character Replacement
+    Find length of longest substring with same characters after at most k replacements.
+    Args:
+        s: Input string
+        k: Maximum number of character replacements allowed
+    Returns:
+        int: Length of longest valid substring
+    """
+    count = {}  # Character frequency map for current window
+    maxlen = 0  # Maximum valid window size found
+    maxfreq = 0  # Highest frequency of any character in current window
+    left = 0  # Left boundary of sliding window
 
+    # Expand window by moving right pointer
     for right in range(len(s)):
+        # Add new character to window
         count[s[right]] = count.get(s[right], 0) + 1
+
+        # Update maximum frequency (most common character in current window)
         maxfreq = max(maxfreq, count[s[right]])
 
+        # Check if current window is valid
+        # Window is valid if: (window_size - most_frequent_count) <= k
+        # This means we need at most k replacements to make all characters the same
         while (right - left + 1) - maxfreq > k:
-            count[s[left]] -= 1
-            left += 1
+            # Window invalid: shrink from left until valid again
+            count[s[left]] -= 1  # Remove leftmost character
+            left += 1  # Move left boundary right
 
+            # Note: We don't update maxfreq here for optimization
+            # It's okay to keep a slightly higher maxfreq because:
+            # 1. It only makes the condition more lenient (still correct)
+            # 2. Recalculating maxfreq would make it O(n) per iteration
+
+        # Update maximum valid window size found
         maxlen = max(maxlen, right - left + 1)
 
+    # Time Complexity: O(n) where n = len(s)
+    # - Outer loop runs n times (right pointer)
+    # - Inner while loop: each left pointer position visited at most once
+    # - Total: O(n) amortized
+    # Space Complexity: O(min(n, 26)) = O(1) for the frequency map
+    # - At most 26 different characters (English alphabet)
     return maxlen
+
