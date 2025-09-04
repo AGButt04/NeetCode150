@@ -3,12 +3,12 @@
 
 def maxProfit(prices):
     """
-    Best Time to Buy and Sell Stock
-    Find the maximum profit from buying and selling stock once.
-    Args:
-        prices: List of stock prices where prices[i] is price on day i
-    Returns:
-        int: Maximum profit achievable, 0 if no profit possible
+        Best Time to Buy and Sell Stock
+        Find the maximum profit from buying and selling stock once.
+        Args:
+            prices: List of stock prices where prices[i] is price on day i
+        Returns:
+            int: Maximum profit achievable, 0 if no profit possible
     """
     maxProfit = 0  # Track maximum profit found so far
     buyPrice = prices[0]  # Start with first day as potential buy price
@@ -61,13 +61,13 @@ def lengthOfLongestSubstring(s):
 
 def checkInclusion(s1, s2):
     """
-    Permutation in String (Sliding Window)
-    Check if any permutation of s1 is a substring of s2.
-    Args:
-        s1: Pattern string to find permutation of
-        s2: Text string to search in
-    Returns:
-        bool: True if any permutation of s1 exists as substring in s2
+        Permutation in String (Sliding Window)
+        Check if any permutation of s1 is a substring of s2.
+        Args:
+            s1: Pattern string to find permutation of
+            s2: Text string to search in
+        Returns:
+            bool: True if any permutation of s1 exists as substring in s2
     """
     # Early termination: s1 cannot fit in s2
     if len(s1) > len(s2):
@@ -112,13 +112,13 @@ def checkInclusion(s1, s2):
 
 def characterReplacement(s, k):
     """
-    Longest Repeating Character Replacement
-    Find length of longest substring with same characters after at most k replacements.
-    Args:
-        s: Input string
-        k: Maximum number of character replacements allowed
-    Returns:
-        int: Length of longest valid substring
+        Longest Repeating Character Replacement
+        Find length of longest substring with same characters after at most k replacements.
+        Args:
+            s: Input string
+            k: Maximum number of character replacements allowed
+        Returns:
+            int: Length of longest valid substring
     """
     count = {}  # Character frequency map for current window
     maxlen = 0  # Maximum valid window size found
