@@ -110,3 +110,18 @@ def recurse(st, openCount, closeCount, parentheses, n):
 
     recurse(st + "(", openCount + 1, closeCount, parentheses, n)
     recurse(st + ")", openCount, closeCount + 1, parentheses, n)
+
+def dailyTemperatures(temperatures):
+    stack = []
+    result = [0] * len(temperatures)
+
+    for index, temp in enumerate(temperatures):
+
+        while stack and temperatures[stack[-1]] < temp:
+            prevIndex = stack.pop()
+            days = index - prevIndex
+            result[prevIndex] = days
+
+        stack.append(index)
+
+    return result
