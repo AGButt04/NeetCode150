@@ -70,3 +70,28 @@ class MinStack:
         if self.minimums:
             return self.minimums[-1]
         return None
+
+def evalRPN(tokens):
+    stack = []
+
+    for string in tokens:
+        try:
+            strNum = int(string)
+            stack.append(strNum)
+        except ValueError:
+            newNum = 0
+            right = stack.pop()
+            left = stack.pop()
+
+            if string == "+":
+                newNum = left + right
+            elif string == "-":
+                newNum = left - right
+            elif string == "*":
+                newNum = left * right
+            else:
+                newNum = int(left / right)
+
+            stack.append(newNum)
+
+    return stack[-1]
