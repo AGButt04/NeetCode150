@@ -95,3 +95,18 @@ def evalRPN(tokens):
             stack.append(newNum)
 
     return stack[-1]
+
+def generateParenthesis(n):
+    parentheses = []
+    recurse("", 0, 0, parentheses, n)
+    return parentheses
+
+def recurse(st, openCount, closeCount, parentheses, n):
+    if openCount > n or openCount < closeCount:
+        return;
+    if len(st) == n * 2:
+        parentheses.append(st)
+        return;
+
+    recurse(st + "(", openCount + 1, closeCount, parentheses, n)
+    recurse(st + ")", openCount, closeCount + 1, parentheses, n)
