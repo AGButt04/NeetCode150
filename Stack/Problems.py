@@ -72,16 +72,23 @@ class MinStack:
         return None
 
 def evalRPN(tokens):
+    """
+        Evaluate Reverse Polish Notation
+        Calculate result of expression in postfix notation.
+
+        Approach: Use stack to store operands, apply operators when encountered.
+    """
     stack = []
 
     for string in tokens:
         try:
+            # Try to convert to number
             strNum = int(string)
             stack.append(strNum)
         except ValueError:
-            newNum = 0
-            right = stack.pop()
-            left = stack.pop()
+            # It's an operator - pop two operands
+            right = stack.pop()  # Second operand
+            left = stack.pop()  # First operand
 
             if string == "+":
                 newNum = left + right
@@ -89,12 +96,14 @@ def evalRPN(tokens):
                 newNum = left - right
             elif string == "*":
                 newNum = left * right
-            else:
-                newNum = int(left / right)
+            else:  # Division
+                newNum = int(left / right)  # Truncate toward zero
 
             stack.append(newNum)
 
-    return stack[-1]
+    # Time Complexity: O(n) - single pass through tokens
+    # Space Complexity: O(n) - stack stores operands
+    return stack[-1]  # Final result
 
 def generateParenthesis(n):
     parentheses = []
@@ -103,13 +112,16 @@ def generateParenthesis(n):
 
 def recurse(st, openCount, closeCount, parentheses, n):
     if openCount > n or openCount < closeCount:
-        return;
+        return
     if len(st) == n * 2:
         parentheses.append(st)
-        return;
+        return
 
     recurse(st + "(", openCount + 1, closeCount, parentheses, n)
     recurse(st + ")", openCount, closeCount + 1, parentheses, n)
+
+    # Time complexity: O(n^2 log n)
+    # Space complexity: O(n) for the parentheses array
 
 def dailyTemperatures(temperatures):
     stack = []
@@ -124,4 +136,6 @@ def dailyTemperatures(temperatures):
 
         stack.append(index)
 
+    # Time Complexity: O(n) for iterating over the array once
+    # Space Complexity: O(n) for storing the results
     return result
