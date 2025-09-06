@@ -106,36 +106,61 @@ def evalRPN(tokens):
     return stack[-1]  # Final result
 
 def generateParenthesis(n):
+    """
+        Generate Parentheses
+        Generate all valid combinations of n pairs of parentheses.
+        Approach: Backtracking with constraints on open/close counts.
+    """
     parentheses = []
     recurse("", 0, 0, parentheses, n)
     return parentheses
 
+
 def recurse(st, openCount, closeCount, parentheses, n):
+    """
+    Recursive helper for generating valid parentheses combinations.
+    Args:
+        st: Current string being built
+        openCount: Number of '(' added so far
+        closeCount: Number of ')' added so far
+        parentheses: Result list to populate
+        n: Target number of pairs
+    """
+    # Pruning: invalid states
     if openCount > n or openCount < closeCount:
         return
+
+    # Base case: complete valid combination
     if len(st) == n * 2:
         parentheses.append(st)
         return
 
+    # Try adding opening parenthesis
     recurse(st + "(", openCount + 1, closeCount, parentheses, n)
+    # Try adding closing parenthesis
     recurse(st + ")", openCount, closeCount + 1, parentheses, n)
-
-    # Time complexity: O(n^2 log n)
-    # Space complexity: O(n) for the parentheses array
+    # Time Complexity: O(4^n / sqrt(n)) - Catalan number bounds
+    # Space Complexity: O(n) - recursion depth and string length
 
 def dailyTemperatures(temperatures):
-    stack = []
-    result = [0] * len(temperatures)
+    """
+        Daily Temperatures
+        Find how many days until a warmer temperature for each day.
+        Approach: Monotonic stack to track indices of unresolved temperatures.
+    """
+    stack = []  # Store indices of temperatures waiting for warmer day
+    result = [0] * len(temperatures)  # Initialize with 0s (no warmer day)
 
     for index, temp in enumerate(temperatures):
-
+        # Process all previous temperatures that are cooler than current
         while stack and temperatures[stack[-1]] < temp:
-            prevIndex = stack.pop()
-            days = index - prevIndex
+            prevIndex = stack.pop()  # Index of cooler temperature
+            days = index - prevIndex  # Days between temperatures
             result[prevIndex] = days
 
-        stack.append(index)
+        stack.append(index)  # Add current day to stack
 
-    # Time Complexity: O(n) for iterating over the array once
-    # Space Complexity: O(n) for storing the results
+    # Time Complexity: O(n) - each index pushed/popped at most once
+    # Space Complexity: O(n) - stack and result array
     return result
+
