@@ -6,6 +6,7 @@ def isValid(s):
     Valid Parentheses - Check if parentheses are properly matched and nested.
     Approach: Use stack to track opening brackets, match with closing brackets.
     """
+
     stack = []
 
     for parentheses in s:
