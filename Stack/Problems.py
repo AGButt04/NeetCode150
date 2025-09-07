@@ -164,3 +164,27 @@ def dailyTemperatures(temperatures):
     # Space Complexity: O(n) - stack and result array
     return result
 
+
+def carFleet(target, position, speed):
+    """
+    Clean stack-based solution for car fleet problem.
+    Stack stores the time to destination for the leading car of each fleet.
+    """
+    stack = []
+    sortedPositions = [(p, s) for p, s in zip(position, speed)]
+    sortedPositions.sort(reverse=True)  # Sort by position, closest to target first
+
+    for p, s in sortedPositions:
+        distance = (target - p) / s  # Time to reach destination
+        stack.append(distance)
+
+        # If current car is faster than the car ahead, it will catch up
+        # Remove the faster car's time since they'll form one fleet
+        if len(stack) >= 2:
+            if stack[-1] <= stack[-2]:
+                stack.pop()
+
+    # Time complexity: O(n) for iterating through the array and sorting O (log) => O(n log n)
+    # Space complexity: O(n) for keeping track of the stack and the sorted array
+    return len(stack)  # Number of fleets = number of leading cars
+
