@@ -188,3 +188,34 @@ def carFleet(target, position, speed):
     # Space complexity: O(n) for keeping track of the stack and the sorted array
     return len(stack)  # Number of fleets = number of leading cars
 
+def largestRectangleArea(heights):
+    stack = []
+    maxArea = 0
+
+    for i, h in enumerate(heights):
+        while stack and heights[stack[-1]] > h:
+            currArea = heightCheck(i, stack, heights)
+            maxArea = max(maxArea, currArea)
+
+        stack.append(i)
+
+    while stack:
+        currArea = heightCheck(len(heights), stack, heights)
+        maxArea = max(maxArea, currArea)
+
+    return maxArea
+
+def heightCheck(w, stack, heights):
+    currIndex = stack.pop()
+    length = heights[currIndex]
+    if stack:
+        width = w - stack[-1] - 1
+    else:
+        width = w
+
+    currArea = length * width
+    return currArea
+
+
+
+
