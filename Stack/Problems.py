@@ -188,33 +188,43 @@ def carFleet(target, position, speed):
     # Space complexity: O(n) for keeping track of the stack and the sorted array
     return len(stack)  # Number of fleets = number of leading cars
 
+
 def largestRectangleArea(heights):
-    stack = []
+    stack = []  # Stack stores indices of heights in increasing order
     maxArea = 0
 
     for i, h in enumerate(heights):
+        # When current height is shorter, calculate rectangles for taller bars
+        # Pop all bars taller than current height
         while stack and heights[stack[-1]] > h:
             currArea = heightCheck(i, stack, heights)
             maxArea = max(maxArea, currArea)
 
         stack.append(i)
 
+    # Process remaining bars (all in increasing order)
+    # Use array length as right boundary since no shorter bar found
     while stack:
         currArea = heightCheck(len(heights), stack, heights)
         maxArea = max(maxArea, currArea)
 
+    # Time Complexity: O(n) => As walks through the array once and pops indices once
+    # Space Complexity:  O(n) => As we are keeping track of the stack (indices)
     return maxArea
 
-def heightCheck(w, stack, heights):
-    currIndex = stack.pop()
-    length = heights[currIndex]
-    if stack:
-        width = w - stack[-1] - 1
-    else:
-        width = w
 
-    currArea = length * width
-    return currArea
+def heightCheck(rightBound, stack, heights):
+    currIndex = stack.pop()  # Index of bar we're calculating rectangle for
+    height = heights[currIndex]
+
+    # Calculate width: distance between left and right boundaries
+    # Left boundary = top of stack (last shorter bar), Right boundary = current position
+    if stack:
+        width = rightBound - stack[-1] - 1  # Exclude the boundary bars
+    else:
+        width = rightBound  # No left boundary, rectangle extends to start
+
+    return height * width
 
 
 
