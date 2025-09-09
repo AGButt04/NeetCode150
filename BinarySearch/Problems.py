@@ -38,4 +38,7 @@ def searchMatrix(matrix, target):
             else:
                 left = c + 1
 
+    # Time complexity: O(m * log n) as we perform binary search on
+    # each row with n numbers, and there are m rows in the matrix
+    # Space complexity: O(1) Space complexity for just pointers.
     return False
