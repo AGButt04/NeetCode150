@@ -62,5 +62,22 @@ def searchMatrixOptimal(matrix, target):
         else:
             left = mid + 1
 
-    # Alternative O(log(m*n)) solution - treat matrix as flattened array
+    # Alternative O(log(m * n)) solution - treat matrix as flattened array
     return False
+
+def findMin(nums):
+    left = 0
+    right = len(nums) - 1
+
+    while left < right:
+        mid = (left + right) // 2
+        curr = nums[mid]
+
+        if curr > nums[right]:
+            left = mid + 1
+        else:
+            right = mid
+
+    # Time complexity: O(log n) for doing binary search
+    # Space complexity: O(1) for just keeping track of pointers
+    return min(nums[0], nums[left])
