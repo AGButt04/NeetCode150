@@ -81,3 +81,33 @@ def findMin(nums):
     # Time complexity: O(log n) for doing binary search
     # Space complexity: O(1) for just keeping track of pointers
     return min(nums[0], nums[left])
+
+def searchRotated(nums, target):
+    left = 0
+    right = len(nums) - 1
+
+    while left <= right:
+        mid = (right + left) // 2  # Standard binary search mid index
+
+        if nums[mid] == target:  # Found the target
+            return mid
+
+        # Case 1: Left half is sorted
+        if nums[left] <= nums[mid]:
+            # Check if target is inside the sorted left half
+            if nums[left] <= target < nums[mid]:
+                right = mid - 1  # Search in left half
+            else:
+                left = mid + 1  # Search in right half
+
+        # Case 2: Right half is sorted
+        else:
+            # Check if target is inside the sorted right half
+            if nums[mid] < target <= nums[right]:
+                left = mid + 1  # Search in right half
+            else:
+                right = mid - 1  # Search in left half
+
+    # Time complexity: O(log n) for doing binary search
+    # Space complexity: O(1) for just keeping track of pointers
+    return -1
