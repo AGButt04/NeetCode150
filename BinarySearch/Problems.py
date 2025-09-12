@@ -1,5 +1,6 @@
 # This file has all the problems in the Two Pointers
 # section of the NeetCode150 with the explanations.
+import math
 
 def search(nums, target):
     left = 0
@@ -111,3 +112,26 @@ def searchRotated(nums, target):
     # Time complexity: O(log n) for doing binary search
     # Space complexity: O(1) for just keeping track of pointers
     return -1
+
+def minEatingSpeed(piles, h):
+    left = 1  # The smallest possible eating speed
+    right = max(piles)  # The largest possible eating speed (eat biggest pile in 1 hour)
+    upperBound = right  # Initialize answer with worst-case speed
+
+    while left <= right:  # Standard binary search loop
+        mid = (left + right) // 2  # Candidate eating speed
+
+        count = 0  # Total hours needed at speed = mid
+        for p in piles:
+            count += math.ceil(float(p) / mid)
+            # divide each pile size by speed, round up (since partial piles take full hour)
+
+        if count <= h:  # If we can finish within h hours
+            upperBound = mid  # This speed works, try slower speed to minimize
+            right = mid - 1  # Search left half
+        else:
+            left = mid + 1  # Too slow, must increase speed
+
+    # Time complexity: O(n * log n) => O(log n) for BS, and O(n) for going over the piles each time
+    # Space Complexity: O(1) as we are just keeping track of three variables.
+    return upperBound
