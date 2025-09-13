@@ -135,3 +135,37 @@ def minEatingSpeed(piles, h):
     # Time complexity: O(n * log n) => O(log n) for BS, and O(n) for going over the piles each time
     # Space Complexity: O(1) as we are just keeping track of three variables.
     return upperBound
+
+
+class TimeMap:
+    def __init__(self):
+        self.timestamps = {}
+
+    def set(self, key: str, value: str, timestamp: int) -> None:
+        if key not in self.timestamps:
+            self.timestamps[key] = [(timestamp, value)]
+            return
+
+        self.timestamps[key].append((timestamp, value))
+
+    def get(self, key: str, timestamp: int) -> str:
+        if key not in self.timestamps:
+            return ""
+
+        pairs = self.timestamps[key]
+        left = 0
+        right = len(pairs) - 1
+        mostRecent = -1
+
+        while left <= right:
+            mid = (left + right) // 2
+            time, value = pairs[mid]
+
+            if time <= timestamp:
+                mostRecent = mid
+                left = mid + 1
+            else:
+                right = mid - 1
+
+        return pairs[mostRecent][1] if mostRecent >= 0 else ""
+
