@@ -139,33 +139,45 @@ def minEatingSpeed(piles, h):
 
 class TimeMap:
     def __init__(self):
+        # Dictionary where:
+        # key -> list of (timestamp, value) pairs (sorted by timestamp in order of insertion)
         self.timestamps = {}
+        # Space Complexity: O(n), since every call to set() stores one new (timestamp, value)
 
     def set(self, key: str, value: str, timestamp: int) -> None:
+        # If the key is new, initialize with a list
         if key not in self.timestamps:
             self.timestamps[key] = [(timestamp, value)]
             return
 
+        # Otherwise, append new (timestamp, value) to the list
         self.timestamps[key].append((timestamp, value))
+        # Time Complexity: O(1), dictionary lookup + list append
 
     def get(self, key: str, timestamp: int) -> str:
+        # If key doesn’t exist, return empty string
         if key not in self.timestamps:
             return ""
 
-        pairs = self.timestamps[key]
+        pairs = self.timestamps[key]  # list of (timestamp, value)
         left = 0
         right = len(pairs) - 1
-        mostRecent = -1
+        mostRecent = -1  # stores index of latest timestamp <= query timestamp
 
+        # Binary search for the greatest timestamp <= given timestamp
         while left <= right:
             mid = (left + right) // 2
             time, value = pairs[mid]
 
             if time <= timestamp:
-                mostRecent = mid
-                left = mid + 1
+                mostRecent = mid       # candidate found
+                left = mid + 1         # search to the right for newer candidate
             else:
-                right = mid - 1
+                right = mid - 1        # too new, search left
 
+        # If found, return value; otherwise, return ""
+        # Time Complexity: O(log n) due to binary search
         return pairs[mostRecent][1] if mostRecent >= 0 else ""
+
+
 
