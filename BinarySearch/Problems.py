@@ -179,5 +179,48 @@ class TimeMap:
         # Time Complexity: O(log n) due to binary search
         return pairs[mostRecent][1] if mostRecent >= 0 else ""
 
+def findMedianSortedArrays(nums1, nums2):
+    A, B = nums1, nums2
+    total = len(A) + len(B)
+
+    # Ensure A is the smaller array (so we binary search on it)
+    if len(A) > len(B):
+        A, B = B, A
+
+    left, right = 0, len(A)
+
+    while left <= right:
+        # Partition A
+        A_mid = (left + right) // 2
+        # Partition B is derived from total
+        B_mid = (total // 2) - A_mid
+
+        # Get left/right values around partitions
+        # Use -inf / +inf when partition is at array edge
+        A_left_max = -math.inf if A_mid == 0 else A[A_mid - 1]
+        A_right_min = math.inf if A_mid == len(A) else A[A_mid]
+
+        B_left_max = -math.inf if B_mid == 0 else B[B_mid - 1]
+        B_right_min = math.inf if B_mid == len(B) else B[B_mid]
+
+        # Found the correct partition
+        if A_left_max <= B_right_min and B_left_max <= A_right_min:
+            if total % 2 == 0:
+                # Even total → median is avg of two middle values
+                return (max(A_left_max, B_left_max) + min(A_right_min, B_right_min)) / 2
+            else:
+                # Odd total → median is the min of right partition
+                return min(A_right_min, B_right_min)
+
+        # Too far right in A, need to move left
+        elif A_left_max > B_right_min:
+            right = A_mid - 1
+        # Too far left in A, need to move right
+        else:
+            left = A_mid + 1
+
+    # Time complexity: O(log (min(m, n))
+    # Space complexity: O(n) for storing two arrays
+    return None
 
 
