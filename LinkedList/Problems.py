@@ -14,3 +14,14 @@ def hasCycle(head):
 
     return False
 
+def reverseList(head):
+    walker = head
+    prev = None
+
+    while walker:
+        ahead = walker.next
+        walker.next = prev
+        prev = walker
+        walker = ahead
+
+    return prev
