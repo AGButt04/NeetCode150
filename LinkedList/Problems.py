@@ -61,3 +61,31 @@ def mergeTwoLists(list1, list2):
     # Space: O(1) — only extra dummy node/pointer
 
     return head.next              # skip dummy
+
+def reorderList(head):
+    fast = head
+    slow = head
+
+    while fast and fast.next:
+        fast = fast.next.next
+        slow = slow.next
+
+    reverseHead = slow.next
+    slow.next = None
+
+    # Reverse the other half
+    prev = None
+    while reverseHead:
+        ahead = reverseHead.next
+        reverseHead.next = prev
+        prev = reverseHead
+        reverseHead = ahead
+
+    walker = head
+    while walker and prev:
+        ahead = walker.next
+        prevAhead = prev.next
+        walker.next = prev
+        prev.next = ahead
+        walker = ahead
+        prev = prevAhead
