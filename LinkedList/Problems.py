@@ -63,29 +63,37 @@ def mergeTwoLists(list1, list2):
     return head.next              # skip dummy
 
 def reorderList(head):
+    # Step 1: Find the middle using fast & slow pointers
     fast = head
     slow = head
-
     while fast and fast.next:
         fast = fast.next.next
         slow = slow.next
 
+    # Step 2: Split into two halves
     reverseHead = slow.next
-    slow.next = None
+    slow.next = None   # cut the list
 
-    # Reverse the other half
+    # Step 3: Reverse the second half
     prev = None
     while reverseHead:
         ahead = reverseHead.next
         reverseHead.next = prev
         prev = reverseHead
         reverseHead = ahead
+    # now prev points to head of reversed second half
 
-    walker = head
+    # Step 4: Merge the two halves
+    walker = head       # first half
     while walker and prev:
-        ahead = walker.next
-        prevAhead = prev.next
-        walker.next = prev
-        prev.next = ahead
-        walker = ahead
-        prev = prevAhead
+        ahead = walker.next      # save next from first half
+        prevAhead = prev.next    # save next from second half
+
+        walker.next = prev       # link node from first half → node from second half
+        prev.next = ahead        # link node from second half → next of first half
+
+        walker = ahead           # move forward in first half
+        prev = prevAhead         # move forward in second half
+
+    # Time complexity: O(n + n) => O(n)
+    # Space complexity would be O(1).
