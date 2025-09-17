@@ -97,3 +97,11 @@ def reorderList(head):
 
     # Time complexity: O(n + n) => O(n)
     # Space complexity would be O(1).
+
+
+def removeNthFromEnd(head, n):
+
+
+    # Time complexity: O(n) for iterating twice the list O(n + n) => O(n)
+    # Space complexity: O(1) for just storing handful of variables.
+    return head
