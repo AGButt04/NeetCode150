@@ -100,7 +100,32 @@ def reorderList(head):
 
 
 def removeNthFromEnd(head, n):
+    # First pass: get total length
+    length = 0
+    walker = head
+    while walker:
+        length += 1
+        walker = walker.next
 
+    # Edge case: removing head node
+    if length - n == 0:
+        return head.next
+
+    # Second pass: find and remove target node
+    walker = head
+    prev = ListNode()  # Dummy node
+    count = 0
+
+    while walker:
+        if length - count == n:  # Found nth from end
+            prev.next = walker.next
+            break
+
+        prev = walker
+        walker = walker.next
+        count += 1
+
+    return head
 
     # Time complexity: O(n) for iterating twice the list O(n + n) => O(n)
     # Space complexity: O(1) for just storing handful of variables.
