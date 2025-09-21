@@ -155,5 +155,18 @@ def addTwoNumbers(l1, l2):
     # Return actual head (skip dummy)
     return newHead.next
 
+def findDuplicate(nums):
+    # Using HashMap for keeping the count of the numbers
+    frequency = {}
 
+    for n in nums:
+        # Check if the number occurred before
+        if n in frequency:
+            return n
+
+        frequency[n] = frequency.get(n, 0) + 1
+
+    # Time complexity: O(n) for iterating over the array
+    # Space Complexity: O(n) for keeping the HashMAP
+    return -1
 
