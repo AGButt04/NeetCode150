@@ -130,25 +130,30 @@ def removeNthFromEnd(head, n):
     return head
 
 def addTwoNumbers(l1, l2):
+    # Dummy head to simplify result list creation
     newHead = ListNode()
     curr = newHead
     carry = 0
-
+    # Continue while there are digits left in l1/l2 OR carry remains
     while l1 or l2 or carry:
-        v1 = l1.val if l1 else 0
-        v2 = l2.val if l2 else 0
-        val = v1 + v2 + carry
+        v1 = l1.val if l1 else 0   # digit from l1 (or 0 if None)
+        v2 = l2.val if l2 else 0   # digit from l2 (or 0 if None)
+        val = v1 + v2 + carry      # sum of both digits + carry
 
-        carry = val // 10
-        val = val % 10
+        carry = val // 10          # compute carry for next position
+        val = val % 10             # current digit (0–9)
 
+        # Append new digit node to result list
         node = ListNode(val)
         curr.next = node
 
+        # Advance pointers
         l1 = l1.next if l1 else None
         l2 = l2.next if l2 else None
         curr = curr.next
 
+    # Return actual head (skip dummy)
     return newHead.next
+
 
 
