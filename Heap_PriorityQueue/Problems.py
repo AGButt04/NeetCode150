@@ -36,3 +36,14 @@ def lastStoneWeight(stones):
             heapq.heappush(maxHeap, -stone1)
 
     return -maxHeap[0] if maxHeap else 0
+
+def findKthLargest(nums, k):
+    minHeap = []
+
+    for n in nums:
+        heapq.heappush(minHeap, n)
+
+        if len(minHeap) > k:
+            heapq.heappop(minHeap)
+
+    return minHeap[0]
