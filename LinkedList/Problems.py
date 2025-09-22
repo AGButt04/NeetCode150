@@ -170,3 +170,20 @@ def findDuplicate(nums):
     # Space Complexity: O(n) for keeping the HashMAP
     return -1
 
+def copyRandomList(head):
+    copies = {None: None}
+    walker = head
+
+    while walker:
+        newNode = ListNode(walker.val)
+        copies[walker] = newNode
+        walker = walker.next
+
+    walker = head
+    while walker:
+        curr = copies[walker]
+        curr.random = copies[walker.random]
+        curr.next = copies[walker.next]
+        walker = walker.next
+
+    return copies[head]
