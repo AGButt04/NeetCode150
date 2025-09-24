@@ -243,5 +243,12 @@ class LRUCache:
             node = self.cache[key]
             node.val = value
             self.move_to_tail(node)
+        else:
+            # create new node
+            node = self.Node(key, value)
+            self.cache[key] = node
+            self.add_to_tail(node)
 
+        if len(self.cache) > self.capacity:
+            self.removeLRU()
 
