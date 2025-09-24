@@ -187,3 +187,61 @@ def copyRandomList(head):
         walker = walker.next
 
     return copies[head]
+
+
+class LRUCache:
+    class Node:
+        def __init__(self, key, value):
+            self.key = key
+            self.val = value
+            self.next = None
+            self.prev = None
+
+    def __init__(self, capacity: int):
+        self.cache = {}  # hashmap: key -> node
+        self.capacity = capacity
+        self.head = self.Node(0, 0)  # dummy head
+        self.tail = self.Node(0, 0)  # dummy tail
+        self.head.next = self.tail
+        self.tail.prev = self.head
+
+    def move_to_tail(self, node):
+        # unlink node
+        node.prev.next = node.next
+        node.next.prev = node.prev
+        # re-insert before tail
+        self.add_to_tail(node)
+
+    def add_to_tail(self, node):
+        # insert node just before tail
+        node.prev = self.tail.prev
+        self.tail.prev.next = node
+        node.next = self.tail
+        self.tail.prev = node
+
+    def removeLRU(self):
+        # remove least recently used node (right after head)
+        node = self.head.next
+        self.head.next = node.next
+        node.next.prev = self.head
+        # cleanup node
+        node.prev = None
+        node.next = None
+        # delete from hashmap
+        del self.cache[node.key]
+
+    def get(self, key: int) -> int:
+        if key in self.cache:
+            node = self.cache[key]
+            self.move_to_tail(node)  # mark as recently used
+            return node.val
+        return -1
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache:
+            # update value and move to tail
+            node = self.cache[key]
+            node.val = value
+            self.move_to_tail(node)
+
+
