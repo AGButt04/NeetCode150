@@ -1,6 +1,8 @@
 # This file has all the problems in the Sliding Window
 # section of the NeetCode150 with the explanations.
+
 import heapq
+import math
 
 class KthLargest:
     def __init__(self, k, nums):
@@ -52,3 +54,26 @@ def findKthLargest(nums, k):
     # Space Complexity: O(k) (heap of size k)
     return minHeap[0]  # Root is kth largest
 
+def kClosest(points, k):
+    maxHeap = []
+    closestPoints = []
+
+    for i in range(len(points)):
+        x = math.pow(points[i][0], 2)
+        y = math.pow(points[i][1], 2)
+        distance = math.sqrt(x + y)
+
+        heapq.heappush(maxHeap, (-distance, i))
+        if len(maxHeap) > k:
+            heapq.heappop(maxHeap)
+
+    while maxHeap:
+        _, i = heapq.heappop(maxHeap)
+        closestPoints.append(points[i])
+
+    return closestPoints
+
+if __name__ == '__main__':
+    points = [[0, 2], [2, 0], [2, 2]]
+    k = 2
+    print(kClosest(points, k))
