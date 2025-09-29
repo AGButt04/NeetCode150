@@ -3,6 +3,8 @@
 
 import heapq
 import math
+from collections import deque, Counter
+
 
 class KthLargest:
     def __init__(self, k, nums):
@@ -73,7 +75,12 @@ def kClosest(points, k):
 
     return closestPoints
 
+def leastInterval(tasks, n):
+    pass
+
+
 if __name__ == '__main__':
-    points = [[0, 2], [2, 0], [2, 2]]
-    k = 2
-    print(kClosest(points, k))
+    tasks = ["A","A","A","B","C"]
+    n = 2
+    print(leastInterval(tasks, n))
+
