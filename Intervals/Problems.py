@@ -48,6 +48,9 @@ def insert(intervals, newInterval):
     # add the last merged interval
     newIntervals.append(newInterval)
 
+    # Time Complexity: O(n) for going through the array once
+    # Space Complexity: O(n) for storing the new intervals
+
     return newIntervals
 
 if __name__ == '__main__':
