@@ -100,15 +100,23 @@ class Twitter:
         # Map userId -> User object
         self.users = {}
 
+    def getUser(self, userId):
+        """
+        Helper function:
+        If the user doesn't exist yet, create a new User object.
+        """
+        if userId not in self.users:
+            self.users[userId] = self.User(userId)
+        return self.users[userId]
 
-    def postTweet(self, userId: int, tweetId: int) -> None:
+    def postTweet(self, userId, tweetId):
         """
         User posts a tweet.
         """
         user = self.getUser(userId)
         user.post(tweetId)
 
-    def getNewsFeed(self, userId: int) -> List[int]:
+    def getNewsFeed(self, userId):
         """
         Return the 10 most recent tweet IDs in the user's news feed.
         Includes the user's own tweets and the tweets of people they follow.
@@ -134,7 +142,7 @@ class Twitter:
         # Return just the tweet IDs in reverse-chronological order
         return [tweetId for _, tweetId in most_recent]
 
-    def follow(self, followerId: int, followeeId: int) -> None:
+    def follow(self, followerId, followeeId):
         """
         Make followerId follow followeeId.
         A user cannot follow themselves.
@@ -144,7 +152,7 @@ class Twitter:
         if followerId != followeeId:
             follower.followed.add(followee)
 
-    def unfollow(self, followerId: int, followeeId: int) -> None:
+    def unfollow(self, followerId, followeeId):
         """
         Make followerId unfollow followeeId.
         """
