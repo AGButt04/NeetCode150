@@ -78,6 +78,79 @@ def kClosest(points, k):
 def leastInterval(tasks, n):
     pass
 
+class Twitter:
+    # Global timestamp to keep track of tweet order
+    timestamp = 0
+
+    class User:
+        def __init__(self, userId):
+            self.id = userId
+            # Store tweets as (timestamp, tweetId) so we can sort by recency
+            self.tweets = []
+            # Store people this user follows
+            self.followed = set()
+
+        def post(self, tweetId):
+            # Every tweet increments the global clock
+            Twitter.timestamp += 1
+            # Save the tweet with its timestamp
+            self.tweets.append((Twitter.timestamp, tweetId))
+
+    def __init__(self):
+        # Map userId -> User object
+        self.users = {}
+
+
+    def postTweet(self, userId: int, tweetId: int) -> None:
+        """
+        User posts a tweet.
+        """
+        user = self.getUser(userId)
+        user.post(tweetId)
+
+    def getNewsFeed(self, userId: int) -> List[int]:
+        """
+        Return the 10 most recent tweet IDs in the user's news feed.
+        Includes the user's own tweets and the tweets of people they follow.
+        """
+        if userId not in self.users:
+            return []
+
+        user = self.users[userId]
+        heap = []
+
+        # Add this user's tweets (at most last 10 to save work)
+        for t in user.tweets[-10:]:
+            heapq.heappush(heap, t)
+
+        # Add followees' tweets (also at most last 10 each)
+        for f in user.followed:
+            for t in f.tweets[-10:]:
+                heapq.heappush(heap, t)
+
+        # Pick the 10 largest timestamps (most recent tweets)
+        most_recent = heapq.nlargest(10, heap)
+
+        # Return just the tweet IDs in reverse-chronological order
+        return [tweetId for _, tweetId in most_recent]
+
+    def follow(self, followerId: int, followeeId: int) -> None:
+        """
+        Make followerId follow followeeId.
+        A user cannot follow themselves.
+        """
+        follower = self.getUser(followerId)
+        followee = self.getUser(followeeId)
+        if followerId != followeeId:
+            follower.followed.add(followee)
+
+    def unfollow(self, followerId: int, followeeId: int) -> None:
+        """
+        Make followerId unfollow followeeId.
+        """
+        if followerId in self.users and followeeId in self.users:
+            self.users[followerId].followed.discard(self.users[followeeId])
+
 
 if __name__ == '__main__':
     tasks = ["A","A","A","B","C"]
