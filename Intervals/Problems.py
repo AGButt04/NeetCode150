@@ -55,22 +55,30 @@ def insert(intervals, newInterval):
 
 def merge(intervals):
     newIntervals = []
+    # sort intervals by starting time
     intervals.sort(key=lambda x: x[0])
 
+    # take the first interval as the starting "overlap candidate"
     overlapping = intervals[0]
 
+    # iterate over the rest
     for i in range(1, len(intervals)):
         currInterval = intervals[i]
 
+        # case 1: overlap exists → merge
         if overlapping[1] >= currInterval[0]:
             newStart = min(currInterval[0], overlapping[0])
             newEnd = max(currInterval[1], overlapping[1])
             overlapping = [newStart, newEnd]
+        # case 2: no overlap → save current overlap and reset
         else:
             newIntervals.append(overlapping)
             overlapping = currInterval
 
+    # add the last interval
     newIntervals.append(overlapping)
+    # Time Complexity: O(n) for going through the array once
+    # Space Complexity: O(n) for storing the new intervals
 
     return newIntervals
 
