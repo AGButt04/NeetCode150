@@ -53,6 +53,27 @@ def insert(intervals, newInterval):
 
     return newIntervals
 
+def merge(intervals):
+    newIntervals = []
+    intervals.sort(key=lambda x: x[0])
+
+    overlapping = intervals[0]
+
+    for i in range(1, len(intervals)):
+        currInterval = intervals[i]
+
+        if overlapping[1] >= currInterval[0]:
+            newStart = min(currInterval[0], overlapping[0])
+            newEnd = max(currInterval[1], overlapping[1])
+            overlapping = [newStart, newEnd]
+        else:
+            newIntervals.append(overlapping)
+            overlapping = currInterval
+
+    newIntervals.append(overlapping)
+
+    return newIntervals
+
 if __name__ == '__main__':
-    intervals = [[0, 30], [5, 10], [15, 20]]
-    print(canAttendMeetings(intervals))
+    intervals = [[5, 10], [0, 30], [15, 20]]
+    print(merge(intervals))
