@@ -1,5 +1,6 @@
 # This file has all the problems in the Sliding Window
 # section of the NeetCode150 with the explanations.
+import heapq
 
 class Interval(object):
     def __init__(self, start, end):
@@ -82,6 +83,40 @@ def merge(intervals):
 
     return newIntervals
 
+
+def minMeetingRooms(intervals):
+    heap = []
+    intervals.sort(key=lambda x: x.start)
+
+    for interval in intervals:
+        currEnd = interval.end
+
+        while heap and heap[0] < currEnd:
+            heapq.heappop(heap)
+
+        heapq.heappush(heap, currEnd)
+
+    return len(heap)
+
+def eraseOverlapIntervals(intervals):
+    minIntervals = 0
+    intervals.sort(key=lambda x: x[0])
+    overlapper = intervals[0][1]
+
+    for start, end in intervals[1:]:
+
+        if start < overlapper:
+            minIntervals += 1
+            overlapper = min(overlapper, end)
+        else:
+            overlapper = end
+
+    return minIntervals
+
 if __name__ == '__main__':
-    intervals = [[5, 10], [0, 30], [15, 20]]
-    print(merge(intervals))
+    intervals = [Interval(0, 40), Interval(5, 10), Interval(15, 20)]
+    intervals2 = [[1,2],[2,4],[1,4]]
+    intervals3 = [[1, 2], [2, 4]]
+    # print(minMeetingRooms(intervals))
+    print(eraseOverlapIntervals(intervals2))
+
