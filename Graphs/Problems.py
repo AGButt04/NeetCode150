@@ -24,6 +24,36 @@ def numIslands(self, grid):
 
     return islands
 
+def orangesRotting(grid)
+    m = len(grid)
+    n = len(grid[0])
+    rotten = deque()
+    freshCount = 0
+    time = 0
+
+    for i in range(m):
+        for j in range(n):
+            if grid[i][j] == 2:
+                rotten.append((i, j))
+            elif grid[i][j] == 1:
+                freshCount += 1
+
+    if freshCount == 0:
+        return 0
+
+    while rotten and freshCount > 0:
+        length = len(rotten)
+
+        for i in range(length):
+            current = rotten.popleft()
+            neighbors = self.getNeighborsOrange(grid, current)
+            for x, y in neighbors:
+                freshCount -= 1
+                rotten.append((x, y))
+
+        time += 1
+
+    return time if freshCount == 0 else -1
 
 def getneighbors(self, grid, curr):
     neighbors = []
