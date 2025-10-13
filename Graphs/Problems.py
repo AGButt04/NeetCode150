@@ -55,6 +55,21 @@ def orangesRotting(grid)
 
     return time if freshCount == 0 else -1
 
+def getNeighborsOrange(self, grid, current):
+    directions = [(0, -1), (-1, 0), (0, 1), (1, 0)]
+    neighbors = []
+
+    for x, y in directions:
+        dx = current[0] + x
+        dy = current[1] + y
+
+        if (0 <= dx < len(grid)) and (0 <= dy < len(grid[0])):
+            if grid[dx][dy] == 1:
+                grid[dx][dy] = 2
+                neighbors.append((dx, dy))
+
+    return neighbors
+
 def getneighbors(self, grid, curr):
     neighbors = []
     directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
