@@ -16,3 +16,15 @@ def maxSubArray(nums):
     # Time complexity: O(n) for going through the array once
     # Space complexity: O(1) for keeping track of just 2 variables
     return maxSum
+
+def canJump(nums):
+    length = len(nums)
+    goal = length - 1
+
+    for i in range(len(nums) - 2, -1, -1):
+        check = nums[i] + i
+
+        if check >= goal:
+            goal = i
+
+    return goal == 0
