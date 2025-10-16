@@ -56,3 +56,12 @@ def isBalanced(root):
         return [balanced, max(left[1], right[1]) + 1]
 
     return DFS(root)[0]
+
+def isSameTree(p, q):
+    if not p and not q:
+        return True
+
+    if p and q and p.val == q.val:
+        return isSameTree(p.left, q.left) and isSameTree(p.right, q.right)
+    else:
+        return False
