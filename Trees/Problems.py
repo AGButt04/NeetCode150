@@ -25,3 +25,20 @@ def maxDepth(root):
     rightTree = maxDepth(root.right) + 1
 
     return max(leftTree, rightTree)
+
+def diameterOfBinaryTree(root):
+    dia = 0
+
+    def DFS(root):
+        nonlocal dia
+        if not root:
+            return 0
+
+        left = DFS(root.left)
+        right = DFS(root.right)
+        dia = max(dia, left + right)
+
+        return max(left, right) + 1
+
+    DFS(root)
+    return dia
