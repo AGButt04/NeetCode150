@@ -42,3 +42,17 @@ def diameterOfBinaryTree(root):
 
     DFS(root)
     return dia
+
+def isBalanced(root):
+    def DFS(root):
+        if not root:
+            return [True, 0]
+
+        left = DFS(root.left)
+        right = DFS(root.right)
+
+        balanced = left[0] and right[0] and abs(right[1] - left[1]) <= 1
+
+        return [balanced, max(left[1], right[1]) + 1]
+
+    return DFS(root)[0]
