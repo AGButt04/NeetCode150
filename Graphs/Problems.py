@@ -3,6 +3,32 @@
 
 from collections import deque
 
+def maxAreaOfIsland(grid):
+    stack = []
+    area = 0
+    m = len(grid)
+    n = len(grid[0])
+
+    for i in range(m):
+        for j in range(n):
+            if grid[i][j] == 1:
+                stack.append((i, j))
+                grid[i][j] = 0
+                currArea = 0
+
+                while stack:
+                    currOne = stack.pop()
+                    neighbors = getneighbors(currOne, grid)
+                    currArea += 1
+
+                    for x, y in neighbors:
+                        grid[x][y] = 0
+                        stack.append((x, y))
+
+                area = max(area, currArea)
+
+    return area
+
 def numIslands(self, grid):
     islands = 0
     queue = deque()
