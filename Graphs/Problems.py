@@ -3,6 +3,28 @@
 
 from collections import deque
 
+def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+    if not node:
+        return None
+
+    clone = {}
+    queue = deque()
+    clone[node] = Node(node.val)
+    queue.append(node)
+
+    while queue:
+        curr_node = queue.popleft()
+        curr_neighbors = curr_node.neighbors
+
+        for n in curr_neighbors:
+            if n not in clone:
+                clone[n] = Node(n.val)
+                queue.append(n)
+
+            clone[curr_node].neighbors.append(clone[n])
+
+    return clone[node]
+
 def maxAreaOfIsland(grid):
     stack = []
     area = 0
