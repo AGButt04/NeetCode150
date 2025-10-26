@@ -22,3 +22,19 @@ def climbStairs(self, n):
 
     return steps(memo, n)
 
+def minCostClimbingStairs(self, cost):
+    memo = {}
+
+    def stairs(index):
+        if index in memo:
+            return memo[index]
+        if index >= len(cost):
+            return 0
+
+        total = cost[index] + min(stairs(index + 1), stairs(index + 2))
+
+        memo[index] = total
+        return total
+
+    return min(stairs(0), stairs(1))
+
