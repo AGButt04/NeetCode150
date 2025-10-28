@@ -41,19 +41,19 @@ def minCostClimbingStairs(self, cost):
 def rob(self, nums):
     memo = {}
 
-    def recurse(memo, index, total):
+    def recurse(index):
         if index in memo:
             return memo[index]
         if index >= len(nums):
-            return total
+            return 0
 
-        rob_this = recurse(memo, index + 2, total + nums[index])
-        skip_this = recurse(memo, index + 1, total)
+        rob_this = nums[index] + recurse(index + 2,)
+        skip_this = recurse(index + 1)
 
         result = max(rob_this, skip_this)
         memo[index] = result
 
         return result
 
-    return recurse(memo, 0, 0)
+    return recurse(0)
 
