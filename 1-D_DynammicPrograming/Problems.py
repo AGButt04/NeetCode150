@@ -1,4 +1,4 @@
-# This file has all the problems in the 1-D Dynammic Programming
+# This file has all the problems in the 1-D Dynamic Programming
 # section of the NeetCode150 with the explanations.
 
 def climbStairs(self, n):
@@ -37,4 +37,23 @@ def minCostClimbingStairs(self, cost):
         return total
 
     return min(stairs(0), stairs(1))
+
+def rob(self, nums):
+    memo = {}
+
+    def recurse(memo, index, total):
+        if index in memo:
+            return memo[index]
+        if index >= len(nums):
+            return total
+
+        rob_this = recurse(memo, index + 2, total + nums[index])
+        skip_this = recurse(memo, index + 1, total)
+
+        result = max(rob_this, skip_this)
+        memo[index] = result
+
+        return result
+
+    return recurse(memo, 0, 0)
 
