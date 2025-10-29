@@ -57,3 +57,16 @@ def rob(self, nums):
 
     return recurse(0)
 
+def robInCircle(self, nums: List[int]) -> int:
+    if len(nums) == 1:
+        return nums[0]
+
+    first = nums[:-1]
+    second = nums[1:]
+
+    first_res = self.robbing(first)
+    second_res = self.robbing(second)
+
+    return max(first_res, second_res)
+
+
