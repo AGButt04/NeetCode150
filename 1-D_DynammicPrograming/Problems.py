@@ -57,7 +57,7 @@ def rob(self, nums):
 
     return recurse(0)
 
-def robInCircle(self, nums: List[int]) -> int:
+def robInCircle(self, nums):
     if len(nums) == 1:
         return nums[0]
 
@@ -119,3 +119,24 @@ def longestPalindrome(self, s):
             right += 1
 
     return s[start: start + length]
+
+def countSubstrings(self, s: str) -> int:
+    n = len(s)
+    pal_substrings = 0
+
+    for i in range(n):
+        # Odd length:
+        left, right = i, i
+        while left >= 0 and right < n and s[left] == s[right]:
+            pal_substrings += 1
+            left -= 1
+            right += 1
+
+        # Even length:
+        left, right = i, i + 1
+        while left >= 0 and right < n and s[left] == s[right]:
+            pal_substrings += 1
+            left -= 1
+            right += 1
+
+    return pal_substrings
