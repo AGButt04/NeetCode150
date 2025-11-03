@@ -1,5 +1,7 @@
 # This file has all the problems in the 1-D Dynamic Programming
 # section of the NeetCode150 with the explanations.
+import math
+
 
 def climbStairs(self, n):
     memo = {}
@@ -153,3 +155,24 @@ def countSubstrings_DP(self, s):
                 pal_substrings += 1
 
     return pal_substrings
+
+def coinChange(self, coins, amount):
+    memo = {}
+
+    def recurse(target):
+        if target in memo:
+            return memo[target]
+        if target == 0:
+            return 0
+
+        min_coins = math.inf
+        for coin in coins:
+            if target - coin >= 0:
+                curr_coins = recurse(target - coin) + 1
+                min_coins = min(min_coins, curr_coins)
+
+        memo[target] = min_coins
+        return min_coins
+
+    min_coins = recurse(amount)
+    return -1 if min_coins == math.inf else min_coins
