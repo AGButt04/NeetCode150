@@ -187,3 +187,17 @@ def coinChange(self, coins, amount):
                 dp[i] = min(dp[i], dp[i - coin] + 1)
 
     return -1 if dp[amount] == math.inf else dp[amount]
+
+def maxProduct(self, nums: List[int]) -> int:
+    curr_min = curr_max = result = nums[0]
+
+    for n in nums[1:]:
+        if n < 0:
+            curr_min, curr_max = curr_max, curr_min
+
+        curr_min = min(n, n * curr_min)
+        curr_max = max(n, n * curr_max)
+
+        result = max(result, curr_max)
+
+    return result
