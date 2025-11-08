@@ -188,7 +188,7 @@ def coinChange(self, coins, amount):
 
     return -1 if dp[amount] == math.inf else dp[amount]
 
-def maxProduct(self, nums: List[int]) -> int:
+def maxProduct(self, nums) -> int:
     curr_min = curr_max = result = nums[0]
 
     for n in nums[1:]:
@@ -202,4 +202,23 @@ def maxProduct(self, nums: List[int]) -> int:
 
     return result
 
-# Hello World
+def wordBreak(s, wordDict):
+    length = len(s)
+    breaks = [False] * (length + 1)
+    breaks[0] = True
+
+    for i in range(length + 1):
+        for j in range(i + 1):
+            if breaks[j] and s[j : i] in wordDict:
+                breaks[i] = True
+
+    print(breaks)
+    return breaks[length]
+
+
+if __name__ == '__main__':
+    s1 = "applepenapple"
+    wordDict1 = ["apple", "pen", "ape"]
+    s = "catsincars"
+    wordDict = ["cats", "cat", "sin", "in", "car"]
+    print(wordBreak(s1, wordDict1))
