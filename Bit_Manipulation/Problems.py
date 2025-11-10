@@ -24,4 +24,16 @@ def hammingWeight(self, n: int) -> int:
 
     return ones
 
+def countBits(n: int):
+    ones_array = [0] * (n + 1)
+
+    for i in range(1, n + 1):
+        num = i
+        while num != 0:
+            ones_array[i] += 1
+            num = num & (num - 1)
+
+    return ones_array
+
 if __name__ == '__main__':
+    print(2 & 1)
