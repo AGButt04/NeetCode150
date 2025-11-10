@@ -1,7 +1,7 @@
 # This file has all the problems in the 1-D Dynamic Programming
 # section of the NeetCode150 with the explanations.
-import math
 
+import math
 
 def climbStairs(self, n):
     memo = {}
