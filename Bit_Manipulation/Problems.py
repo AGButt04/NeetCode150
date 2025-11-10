@@ -13,3 +13,15 @@ def singleNumber(nums):
             return nums[index]
 
     return nums[index]
+
+def hammingWeight(self, n: int) -> int:
+    ones = 0
+
+    while n:
+        if n & 1 == 1:
+            ones += 1
+        n >>= 1
+
+    return ones
+
+if __name__ == '__main__':
