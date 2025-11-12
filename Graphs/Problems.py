@@ -1,6 +1,7 @@
 # This file has all the problems in the Graphs
 # section of the NeetCode150 with the explanations.
-
+import collections
+import math
 from collections import deque
 
 class Node:
@@ -140,6 +141,37 @@ def getneighbors(self, grid, curr):
 
         if 0 <= dx < len(grid) and 0 <= dy < len(grid[0]):
             if grid[dx][dy] == "1":
+                neighbors.append((dx, dy))
+
+    return neighbors
+
+def islandsAndTreasure(self, grid) -> None:
+    inf = math.pow(2, 31) - 1
+    queue = collections.deque()
+
+    for i in range(len(grid)):
+        for j in range(len(grid[0])):
+            if grid[i][j] == 0:
+                queue.append((i, j))
+
+    while queue:
+        cx, cy = queue.popleft()
+        neighbors = self.get_neighbors(grid, cx, cy, inf)
+
+        for nx, ny in neighbors:
+            grid[nx][ny] = grid[cx][cy] + 1
+            queue.append((nx, ny))
+
+def get_neighbors(self, grid, i, j, inf):
+    directions = [(0, 1), (1, 0), (-1, 0), (0, -1)]
+    neighbors = []
+
+    for x, y in directions:
+        dx = i + x
+        dy = j + y
+
+        if 0 <= dx < len(grid) and 0 <= dy < len(grid[0]):
+            if grid[dx][dy] == inf:
                 neighbors.append((dx, dy))
 
     return neighbors
