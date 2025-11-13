@@ -216,9 +216,26 @@ def wordBreak(s, wordDict):
     return breaks[length]
 
 
+def lengthOfLIS(nums):
+    n = len(nums)
+    dp = [[0] * (n + 1) for _ in range(n + 1)]
+
+    for i in range(n - 1, - 1, -1):
+        for j in range(i - 1, -2, -1):
+            LIS = dp[i + 1][j + 1]
+
+            if j == -1 or nums[j] < nums[i]:
+                LIS = max(LIS, dp[i + 1][i + 1] + 1)
+
+            dp[i][j + 1] = LIS
+
+    return dp
+
+
+
 if __name__ == '__main__':
-    s1 = "applepenapple"
-    wordDict1 = ["apple", "pen", "ape"]
-    s = "catsincars"
-    wordDict = ["cats", "cat", "sin", "in", "car"]
-    print(wordBreak(s1, wordDict1))
+    nums = [9, 1, 4, 2, 3, 3, 7]
+    dp = lengthOfLIS(nums)
+
+    for row in dp:
+        print(row)
