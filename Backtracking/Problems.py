@@ -18,7 +18,7 @@ def subsets(nums):
     recurse(0)
     return subsets
 
-def generateParenthesis(self, n: int) -> List[str]:
+def generateParenthesis(self, n: int):
     parenthesis = []
 
     def recurse(string, open_count, close_count):
@@ -34,3 +34,26 @@ def generateParenthesis(self, n: int) -> List[str]:
     recurse("", 0, 0)
 
     return parenthesis
+
+def combinationSum(self, nums, target):
+    combinations = []
+
+    def recurse(combo, num):
+        if num == 0:
+            com = combo.copy()
+            com.sort()
+            if com not in combinations:
+                combinations.append(com)
+            return
+        if num < 0:
+            return
+
+        for n in nums:
+            combo.append(n)
+            num -= n
+            recurse(combo, num)
+            combo.pop()
+            num += n
+
+    recurse([], target)
+    return combinations
