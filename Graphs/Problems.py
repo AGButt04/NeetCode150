@@ -241,4 +241,54 @@ def BFS(self, heights, curr, ocean):
 
     return False
 
+def pacificAtlanticOptimal(self, heights):
+    cells = []
+    atl_starts = []
+    pac_starts = []
+    m = len(heights)
+    n = len(heights[0])
+    pac_cells = [[False] * n for _ in range(m)]
+    atl_cells = [[False] * n for _ in range(m)]
+
+    # ---- Atlantic (bottom + right edges) ----
+    for col in range(n):
+        pac_starts.append((0, col))
+
+    for row in range(m):
+        pac_starts.append((row, 0))
+
+    # ---- Pacific (top + left edges) ----
+    for col in range(n):
+        atl_starts.append((m - 1, col))
+
+    for row in range(m):
+        atl_starts.append((row, n - 1))
+
+    self.BFS(heights, pac_starts, pac_cells)
+    self.BFS(heights, atl_starts, atl_cells)
+
+    for i in range(m):
+        for j in range(n):
+            if pac_cells[i][j] and atl_cells[i][j]:
+                cells.append((i, j))
+
+    return cells
+
+def BFS_optimal(self, heights, ocean_s, ocean_c):
+    queue = collections.deque(ocean_s)
+    directions = [(0, 1), (1, 0), (-1, 0), (0, -1)]
+
+    for x, y in ocean_s:
+        ocean_c[x][y] = True
+
+    while queue:
+        x, y = queue.popleft()
+        # ---- Explore neighbors ----
+        for dx, dy in directions:
+            nx, ny = x + dx, y + dy
+            if 0 <= nx < len(heights) and 0 <= ny < len(heights[0]):
+                if not ocean_c[nx][ny] and heights[nx][ny] >= heights[x][y]:
+                    ocean_c[nx][ny] = True
+                    queue.append((nx, ny))
+
 
