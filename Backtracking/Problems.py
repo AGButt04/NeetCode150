@@ -58,6 +58,32 @@ def combinationSum(nums, target):
     recurse([], target)
     return combinations
 
+def combinationSum2(candidates, target):
+    combinations = []
+    candidates.sort()
+
+    def recurse(idx, curr, comb):
+        if curr == target:
+            combinations.append(comb.copy())
+            return
+        if curr > target or idx >= len(candidates):
+            return
+
+        # Add this number to the combination
+        comb.append(candidates[idx])
+        recurse(idx + 1, curr + candidates[idx], comb)
+        comb.pop()
+
+        # Skip the duplicates
+        while idx + 1 < len(candidates) and candidates[idx] == candidates[idx + 1]:
+            idx += 1
+
+        # Don't add this number to the combination
+        recurse(idx + 1, curr, comb)
+
+    recurse(0, 0, [])
+    return combinations
+
 if '__main__' == __name__:
     candidates = [9, 2, 2, 4, 6, 1, 5]
     target = 8
