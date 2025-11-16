@@ -35,7 +35,7 @@ def generateParenthesis(self, n: int):
 
     return parenthesis
 
-def combinationSum(self, nums, target):
+def combinationSum(nums, target):
     combinations = []
 
     def recurse(combo, num):
@@ -57,3 +57,15 @@ def combinationSum(self, nums, target):
 
     recurse([], target)
     return combinations
+
+if '__main__' == __name__:
+    candidates = [9, 2, 2, 4, 6, 1, 5]
+    target = 8
+    # Output: [
+    #     [1, 2, 5],
+    #     [2, 2, 4],
+    #     [2, 6]
+    # ]
+    combs = combinationSum(candidates, target)
+    for comb in combs:
+        print(comb)
