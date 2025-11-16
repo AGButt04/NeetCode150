@@ -175,3 +175,42 @@ def get_neighbors(self, grid, i, j, inf):
                 neighbors.append((dx, dy))
 
     return neighbors
+
+def pacificAtlantic(self, heights):
+    cells = set()  # use set to remove duplicates
+    m = len(heights)
+    n = len(heights[0])
+
+    # ---- Atlantic (bottom + right edges) ----
+    for col in range(n):
+        curr = (0, col)
+        if self.BFS(heights, curr, "Atlantic"):
+            cells.add((0, col))
+
+    for row in range(m):
+        curr = (row, 0)
+        if self.BFS(heights, curr, "Atlantic"):
+            cells.add((row, 0))
+
+    # ---- Pacific (top + left edges) ----
+    for col in range(n):
+        curr = (m - 1, col)
+        if self.BFS(heights, curr, "Pacific"):
+            cells.add((m - 1, col))
+
+    for row in range(m):
+        curr = (row, n - 1)
+        if self.BFS(heights, curr, "Pacific"):
+            cells.add((row, n - 1))
+
+    # ---- Interior cells ----
+    for i in range(1, m - 1):
+        for j in range(1, n - 1):
+            curr = (i, j)
+            if self.BFS(heights, curr, "Pacific") and self.BFS(heights, curr, "Atlantic"):
+                cells.add((i, j))  # set removes duplicates
+
+    # convert set to list format
+    return [[x, y] for (x, y) in cells]
+
+
