@@ -213,4 +213,32 @@ def pacificAtlantic(self, heights):
     # convert set to list format
     return [[x, y] for (x, y) in cells]
 
+def BFS(self, heights, curr, ocean):
+    queue = collections.deque([curr])
+    directions = [(0, 1), (1, 0), (-1, 0), (0, -1)]
+    visited = {curr}
+    m, n = len(heights), len(heights[0])
+
+    while queue:
+        x, y = queue.popleft()
+
+        # ---- Check Pacific / Atlantic reach ----
+        if ocean == 'Atlantic':
+            if x == m - 1 or y == n - 1:
+                return True
+        else:  # Pacific
+            if x == 0 or y == 0:
+                return True
+
+        # ---- Explore neighbors ----
+        for dx, dy in directions:
+            nx, ny = x + dx, y + dy
+            if 0 <= nx < m and 0 <= ny < n:
+                if heights[nx][ny] <= heights[x][y]:  # downhill allowed
+                    if (nx, ny) not in visited:
+                        visited.add((nx, ny))
+                        queue.append((nx, ny))
+
+    return False
+
 
