@@ -84,6 +84,24 @@ def combinationSum2(candidates, target):
     recurse(0, 0, [])
     return combinations
 
+def permute(self, nums: List[int]) -> List[List[int]]:
+    self.permutations = []
+    self.backtrack([], nums, [False] * len(nums))
+    return self.permutations
+
+def backtrack(self, perm, nums, pick):
+    if len(perm) == len(nums):
+        self.permutations.append(perm.copy())
+        return
+
+    for i in range(len(nums)):
+        if not pick[i]:
+            perm.append(nums[i])
+            pick[i] = True
+            self.backtrack(perm, nums, pick)
+            perm.pop()
+            pick[i] = False
+
 if '__main__' == __name__:
     candidates = [9, 2, 2, 4, 6, 1, 5]
     target = 8
@@ -92,6 +110,6 @@ if '__main__' == __name__:
     #     [2, 2, 4],
     #     [2, 6]
     # ]
-    combs = combinationSum(candidates, target)
+    combs = combinationSum2(candidates, target)
     for comb in combs:
         print(comb)
