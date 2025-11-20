@@ -84,7 +84,7 @@ def combinationSum2(candidates, target):
     recurse(0, 0, [])
     return combinations
 
-def permute(self, nums: List[int]) -> List[List[int]]:
+def permute(self, nums):
     self.permutations = []
     self.backtrack([], nums, [False] * len(nums))
     return self.permutations
