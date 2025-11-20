@@ -231,6 +231,28 @@ def lengthOfLIS(nums):
 
     return dp
 
+def numDecodings(self, s: str) -> int:
+    if s[0] == '0':
+        return 0
+
+    decodings = [0] * len(s);
+    decodings[0] = 1 if s[0] != '0' else 0
+
+    for i in range(1, len(s)):
+        char = s[i]
+
+        if char != '0':
+            decodings[i] = decodings[i - 1]
+
+        num = int(s[i - 1: i + 1])
+        if 10 <= num <= 26:
+            if i - 2 >= 0:
+                decodings[i] += decodings[i - 2]
+            else:
+                decodings[i] += 1
+
+    return decodings[-1]
+
 
 
 if __name__ == '__main__':
