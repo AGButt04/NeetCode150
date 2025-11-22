@@ -102,6 +102,27 @@ def backtrack(self, perm, nums, pick):
             perm.pop()
             pick[i] = False
 
+def subsetsWithDup(self, nums):
+    subsets = []
+    nums.sort()
+
+    def backtrack(idx, curr_set):
+        if idx == len(nums):
+            subsets.append(curr_set.copy())
+            return
+
+        curr_set.append(nums[idx])
+        backtrack(idx + 1, curr_set)
+        curr_set.pop()
+
+        while idx + 1 < len(nums) and nums[idx + 1] == nums[idx]:
+            idx += 1
+
+        backtrack(idx + 1, curr_set)
+
+    backtrack(0, [])
+    return subsets
+
 if '__main__' == __name__:
     candidates = [9, 2, 2, 4, 6, 1, 5]
     target = 8
