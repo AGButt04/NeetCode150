@@ -36,3 +36,21 @@ def setZeroes(self, matrix) -> None:
         # Right
         for i in range(col + 1, n, 1):
             matrix[row][i] = 0
+
+def isHappy(self, n):
+    visited = set()
+
+    while n not in visited:
+        visited.add(n)
+        if n == 1:
+            return True
+
+        new_n = 0
+        while n:
+            dig = n % 10
+            n = n // 10
+            new_n += dig ** 2
+
+        n = new_n
+
+    return False
