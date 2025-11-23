@@ -291,4 +291,32 @@ def BFS_optimal(self, heights, ocean_s, ocean_c):
                     ocean_c[nx][ny] = True
                     queue.append((nx, ny))
 
+def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+    courses = {}
+    states = [0] * numCourses
+
+    for pre in prerequisites:
+        if pre[0] not in courses:
+            courses[pre[0]] = []
+        courses[pre[0]].append(pre[1])
+
+    for c in range(numCourses):
+        if not self.DFS(c, courses, states):
+            return False
+    return True
+
+def DFS(self, c, courses, states):
+    if states[c] == 1:
+        return False
+    if states[c] == 2:
+        return True
+
+    states[c] = 1
+    for pre in courses.get(c, []):
+        if not self.DFS(pre, courses, states):
+            return False
+
+    states[c] = 2
+    return True
+
 
