@@ -291,7 +291,7 @@ def BFS_optimal(self, heights, ocean_s, ocean_c):
                     ocean_c[nx][ny] = True
                     queue.append((nx, ny))
 
-def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+def canFinish(self, numCourses: int, prerequisites) -> bool:
     courses = {}
     states = [0] * numCourses
 
@@ -318,5 +318,46 @@ def DFS(self, c, courses, states):
 
     states[c] = 2
     return True
+
+def solve(self, board):
+    m = len(board)
+    n = len(board[0])
+
+    for i in range(m):
+        for j in range(n):
+            if (i == 0 or i == m - 1 or j == 0 or j == n - 1):
+                if (board[i][j] == 'O'):
+                    self.BFS(i, j, board)
+
+    for i in range(m):
+        for j in range(n):
+            if board[i][j] == 'O':
+                board[i][j] = 'X'
+            elif board[i][j] == 'S':
+                board[i][j] = 'O'
+
+def BFS(self, row, col, board):
+    queue = deque()
+    queue.append((row, col))
+
+    while queue:
+        x, y = queue.popleft()
+        board[x][y] = 'S'
+        for dx, dy in self.get_adjacents(board, x, y):
+            queue.append((dx, dy))
+
+def get_adjacents(self, board, row, col):
+    directions = [(1, 0), (0, 1), (-1, 0), (0, -1)]
+    adjacents = []
+
+    for x, y in directions:
+        dx = row + x
+        dy = col + y
+
+        if (0 <= dx < len(board)) and (0 <= dy < len(board[0])):
+            if board[dx][dy] == 'O':
+                adjacents.append((dx, dy))
+
+    return adjacents
 
 
