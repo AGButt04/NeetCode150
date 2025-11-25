@@ -54,3 +54,22 @@ def isHappy(self, n):
         n = new_n
 
     return False
+
+def plusOne(self, digits):
+    carry = 1
+    idx = 0
+    digits.reverse()
+
+    while carry == 1 and idx < len(digits):
+        add = digits[idx] + carry
+        carry = add // 10
+        add = add % 10
+
+        digits[idx] = add
+        idx += 1
+
+    if carry == 1:
+        digits.append(1)
+
+    digits.reverse()
+    return digits
