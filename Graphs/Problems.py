@@ -360,4 +360,35 @@ def get_adjacents(self, board, row, col):
 
     return adjacents
 
+def findOrder(self, numCourses: int, prerequisites):
+    order = []
+    courses = {}
+    states = [0] * numCourses
+
+    for pre in prerequisites:
+        if pre[0] not in courses:
+            courses[pre[0]] = []
+        courses[pre[0]].append(pre[1])
+
+    for c in range(numCourses):
+        if not self.DFS(c, courses, states, order, numCourses):
+            return []
+
+    return order
+
+def DFS(self, course, courses, states, order, numCourses):
+    if states[course] == 1:
+        return False
+    if states[course] == 2:
+        return True
+
+    states[course] = 1
+    for pre in courses.get(course, []):
+        if not self.DFS(pre, courses, states, order, numCourses):
+            return False
+
+    states[course] = 2
+    order.append(course)
+    return True
+
 
