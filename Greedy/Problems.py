@@ -36,7 +36,7 @@ def canJump(nums):
     # Space Complexity: O(1) — constant extra space
     return goal == 0
 
-def jump(self, nums) -> int:
+def jump(self, nums)  -> int:
     jumps = 0
     left = right = 0
 
