@@ -159,6 +159,33 @@ class Twitter:
         if followerId in self.users and followeeId in self.users:
             self.users[followerId].followed.discard(self.users[followeeId])
 
+def leastInterval(self, tasks,  n):
+    freq = {}
+    max_heap = []
+    cooldown = deque()
+    cycles = 0
+
+    for task in tasks:
+        freq[task] = freq.get(task, 0) + 1
+
+    for f in freq.values():
+        heapq.heappush(max_heap, -f)
+
+    while max_heap or cooldown:
+        cycles += 1
+
+        while cooldown and cooldown[0][1] == cycles:
+            fr, _ = cooldown.popleft()
+            heapq.heappush(max_heap, -fr)
+
+        if max_heap:
+            f = -heapq.heappop(max_heap)
+            f -= 1
+            if f > 0:
+                cooldown.append((f, cycles + n + 1))
+
+    return cycles
+
 
 if __name__ == '__main__':
     tasks = ["A","A","A","B","C"]
