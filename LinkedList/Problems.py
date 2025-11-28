@@ -1,7 +1,6 @@
 # This file has all the problems in the Sliding Window
 # section of the NeetCode150 with the explanations.
-from tkinter.font import names
-
+import heapq
 
 def hasCycle(head):
     # Floyd's Tortoise and Hare algorithm
@@ -254,6 +253,24 @@ class LRUCache:
         if len(self.cache) > self.capacity:
             self.removeLRU()
 
+def mergeKLists(self, lists):
+    if len(lists) == 0: return None
 
+    heap = []
+    dummy = ListNode()
+    current = dummy
 
+    for li in lists:
+        walker = li
+        while walker:
+            heapq.heappush(heap, walker.val)
+            walker = walker.next
+
+    while heap:
+        val = heapq.heappop(heap)
+        node = ListNode(val)
+        current.next = node
+        current = current.next
+
+    return dummy.next
 
