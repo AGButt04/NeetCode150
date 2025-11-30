@@ -1,6 +1,5 @@
 from collections import deque
 
-
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
@@ -93,3 +92,25 @@ def levelOrder(self, root):
         traversal.append(level)
 
     return traversal
+
+def isSubtree(self, root, subRoot):
+    if not root:
+        return False
+
+    if self.sameTree(root, subRoot):
+        return True
+
+    return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
+
+def sameTree(self, root, subroot):
+    if not root and not subroot:
+        return True
+    if not root or not subroot:
+        return False
+    if root.val != subroot.val:
+        return False
+
+    left = self.sameTree(root.left, subroot.left)
+    right = self.sameTree(root.right, subroot.right)
+
+    return left and right
