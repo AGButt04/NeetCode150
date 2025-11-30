@@ -114,3 +114,15 @@ def sameTree(self, root, subroot):
     right = self.sameTree(root.right, subroot.right)
 
     return left and right
+
+def lowestCommonAncestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+    if not root or not p or not q:
+        return None
+
+    if p.val > root.val and q.val > root.val:
+        return self.lowestCommonAncestor(root.right, p, q)
+
+    if p.val < root.val and q.val < root.val:
+        return self.lowestCommonAncestor(root.left, p, q)
+
+    return root
