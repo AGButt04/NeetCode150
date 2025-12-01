@@ -283,6 +283,29 @@ def recurse(self, nums, index, target):
 
     return add or skip
 
+def canPartition(self, nums) -> bool:
+    if sum(nums) % 2 != 0:
+        return False
+
+    dp = set()
+    n = len(nums)
+    dp.add(0)
+    target = sum(nums) // 2
+
+    for i in range(n - 1, -1, -1):
+        new_set = set()
+
+        for num in dp:
+            new_sum = num + nums[i]
+            if new_sum == target: return True
+
+            new_set.add(new_sum)
+            new_set.add(num)
+
+        dp = new_set
+
+    return False
+
 
 if __name__ == '__main__':
     nums = [9, 1, 4, 2, 3, 3, 7]
