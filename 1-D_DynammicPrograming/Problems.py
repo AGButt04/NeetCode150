@@ -267,6 +267,22 @@ def lengthOfLIS(self, nums):
 
     return max_seq
 
+def canPartition(self, nums) -> bool:
+    if sum(nums) % 2 != 0:
+        return False
+    return self.recurse(nums, 0, sum(nums) // 2)
+
+def recurse(self, nums, index, target):
+    if target < 0 or index >= len(nums):
+        return False
+    if target == 0:
+        return True
+
+    add = self.recurse(nums, index + 1, target - nums[index])
+    skip = self.recurse(nums, index + 1, target)
+
+    return add or skip
+
 
 if __name__ == '__main__':
     nums = [9, 1, 4, 2, 3, 3, 7]
