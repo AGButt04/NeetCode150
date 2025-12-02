@@ -73,3 +73,35 @@ def plusOne(self, digits):
 
     digits.reverse()
     return digits
+
+def spiralOrder(self, matrix):
+    order = []
+    m, n = len(matrix), len(matrix[0])
+    left, right = 0, n
+    top, bottom = 0, m
+
+    while left < right and top < bottom:
+        # Go right
+        for r in range(left, right):
+            order.append(matrix[top][r])
+        top += 1
+
+        # Go Down
+        for d in range(top, bottom):
+            order.append(matrix[d][right - 1])
+        right -= 1
+
+        if not (left < right and top < bottom):
+            break
+
+        # Go left
+        for l in range(right - 1, left - 1, -1):
+            order.append(matrix[bottom - 1][l])
+        bottom -= 1
+
+        # Go up
+        for u in range(bottom - 1, top - 1, -1):
+            order.append(matrix[u][left])
+        left += 1
+
+    return order
