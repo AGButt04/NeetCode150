@@ -126,3 +126,24 @@ def lowestCommonAncestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> Tree
         return self.lowestCommonAncestor(root.left, p, q)
 
     return root
+
+def rightSideView(self, root):
+    if not root: return []
+
+    rightSide = []
+    queue = deque()
+    queue.append(root)
+
+    while queue:
+        levelOrder = []
+        length = len(queue)
+
+        for i in range(length):
+            current = queue.popleft()
+            if current.left: queue.append(current.left)
+            if current.right: queue.append(current.right)
+            levelOrder.append(current.val)
+
+        rightSide.append(levelOrder.pop())
+
+    return rightSide
