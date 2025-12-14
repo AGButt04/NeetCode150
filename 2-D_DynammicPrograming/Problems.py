@@ -64,3 +64,19 @@ def recurse(self, memo, m, n):
     down = self.recurse(memo, m - 1, n)
     memo[(m, n)] = right + down
     return memo[(m, n)]
+
+def change(self, amount: int, coins) -> int:
+    coins.sort()
+    combos = self.recurse(amount, coins, 0)
+    return combos
+
+def recurse(self, amount, coins, idx):
+    if amount == 0:
+        return 1
+    if amount < 0 or idx >= len(coins):
+        return 0
+
+    # Add the coin or skip the coin
+    skip = self.recurse(amount, coins, idx + 1)
+    add = self.recurse(amount - coins[idx], coins, idx)
+    return add + skip
