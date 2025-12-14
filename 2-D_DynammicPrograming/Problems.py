@@ -31,3 +31,18 @@ def recurse(self, memo, nums, target, curr, idx):
     memo[(idx, curr)] = ways
 
     return memo[(idx, curr)]
+
+def uniquePaths(self, m: int, n: int) -> int:
+    paths = self.recurse(m, n)
+    return paths
+
+def recurse(self, m, n):
+    if m == 0 or n == 0:
+        return 0
+    if m == 1 and n == 1:
+        return 1
+
+    right = self.recurse(m, n - 1)
+    down = self.recurse(m - 1, n)
+
+    return right + down
