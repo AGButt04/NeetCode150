@@ -146,3 +146,26 @@ def longestCommonSubsequence(self, text1: str, text2: str) -> int:
                 dp[i][j] = max(dp[i][j + 1], dp[i + 1][j])
 
     return dp[0][0]
+
+
+def maxProfit(self, prices: List[int]) -> int:
+    max_profit = self.recurse(prices, 0, False)
+    return max_profit
+
+
+def recurse(self, prices, idx, bought):
+    if idx >= len(prices):
+        return 0
+
+    buy = 0
+    sell = 0
+    if bought:
+        sell = prices[idx] + self.recurse(prices, idx + 2, not bought)
+        skip = self.recurse(prices, idx + 1, bought)
+        sell = max(skip, sell)
+    else:
+        buy = self.recurse(prices, idx + 1, not bought) - prices[idx]
+        skip = self.recurse(prices, idx + 1, bought)
+        buy = max(skip, buy)
+
+    return max(buy, sell)
