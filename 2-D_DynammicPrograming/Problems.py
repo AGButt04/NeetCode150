@@ -169,3 +169,30 @@ def recurse(self, prices, idx, bought):
         buy = max(skip, buy)
 
     return max(buy, sell)
+
+
+def maxProfit(self, prices: List[int]) -> int:
+    memo = {}
+    max_profit = self.recurse(prices, 0, False, memo)
+    return max_profit
+
+
+def recurse(self, prices, idx, bought, memo):
+    if (idx, bought) in memo:
+        return memo[(idx, bought)]
+    if idx >= len(prices):
+        return 0
+
+    buy = 0
+    sell = 0
+    if bought:
+        sell = prices[idx] + self.recurse(prices, idx + 2, not bought, memo)
+        skip = self.recurse(prices, idx + 1, bought, memo)
+        sell = max(skip, sell)
+    else:
+        buy = self.recurse(prices, idx + 1, not bought, memo) - prices[idx]
+        skip = self.recurse(prices, idx + 1, bought, memo)
+        buy = max(skip, buy)
+
+    memo[(idx, bought)] = max(buy, sell)
+    return memo[(idx, bought)]
