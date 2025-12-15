@@ -100,3 +100,18 @@ def recurse(self, memo, amount, coins, idx):
     add = self.recurse(memo, amount - coins[idx], coins, idx)
     memo[(idx, amount)] = add + skip
     return memo[(idx, amount)]
+
+def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+    longest = self.recurse(0, 0, text1, text2)
+    return longest
+
+def recurse(self, i, j, t1, t2):
+    if i == len(t1) or j == len(t2):
+        return 0
+    if t1[i] == t2[j]:
+        return self.recurse(i + 1, j + 1, t1, t2) + 1
+
+    curr = self.recurse(i, j + 1, t1, t2)
+    next = self.recurse(i + 1, j, t1, t2)
+
+    return max(curr, next)
