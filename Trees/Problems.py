@@ -1,3 +1,4 @@
+import math
 from collections import deque
 
 class TreeNode:
@@ -147,3 +148,23 @@ def rightSideView(self, root):
         rightSide.append(levelOrder.pop())
 
     return rightSide
+
+def isValidBST(self, root) -> bool:
+    if not root:
+        return True
+
+    queue = deque()
+    queue.append((root, -math.inf, math.inf))
+
+    while queue:
+        r, left, right = queue.popleft()
+
+        if not (left < r.val < right):
+            return False
+
+        if r.left:
+            queue.append((r.left, left, r.val))
+        if r.right:
+            queue.append((r.right, r.val, right))
+
+    return True
