@@ -168,3 +168,16 @@ def isValidBST(self, root) -> bool:
             queue.append((r.right, r.val, right))
 
     return True
+
+def kthSmallest(self, root, k: int) -> int:
+    in_order = []
+    self.in_order_traverse(root, in_order)
+    return in_order[k - 1]
+
+def in_order_traverse(self, root, order):
+    if root:
+        self.in_order_traverse(root.left, order)
+        order.append(root.val)
+        self.in_order_traverse(root.right, order)
+    else:
+        return
