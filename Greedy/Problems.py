@@ -89,3 +89,15 @@ def isNStraightHand(self, hand, groupSize: int) -> bool:
                     return False
 
     return True
+
+def mergeTriplets(self, triplets, target) -> bool:
+    A = B = C = False
+    t0, t1, t2 = target
+
+    for a, b, c in triplets:
+        if a <= t0 and b <= t1 and c <= t2:
+            if a == t0: A = True
+            if b == t1: B = True
+            if c == t2: C = True
+
+    return A and B and C
