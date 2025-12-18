@@ -66,3 +66,26 @@ def canCompleteCircuit(self, gas, cost):
             index = i + 1
 
     return index
+
+def isNStraightHand(self, hand, groupSize: int) -> bool:
+    if len(hand) % groupSize != 0:
+        return False
+
+    num_groups = len(hand) // groupSize
+    groups = [[] for _ in range(num_groups)]
+    hand.sort()
+    freq = {}
+    for h in hand:
+        freq[h] = freq.get(h, 0) + 1
+        if freq[h] > num_groups:
+            return False
+
+    for h in hand:
+        if freq[h]:
+            for num in range(h, h + groupSize):
+                if freq.get(num):
+                    freq[num] -= 1
+                else:
+                    return False
+
+    return True
