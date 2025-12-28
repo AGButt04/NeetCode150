@@ -187,6 +187,37 @@ def leastInterval(self, tasks,  n):
     return cycles
 
 
+class MedianFinder:
+
+    def __init__(self):
+        self.max_left = []
+        self.min_right = []
+
+    def addNum(self, num: int) -> None:
+        if self.min_right and num > self.min_right[0]:
+            heapq.heappush(self.min_right, num)
+        else:
+            heapq.heappush(self.max_left, -1 * num)
+
+        if len(self.max_left) > len(self.min_right) + 1:
+            popped_element = -1 * heapq.heappop(self.max_left)
+            heapq.heappush(self.min_right, popped_element)
+        if len(self.min_right) > len(self.max_left) + 1:
+            popped_element = heapq.heappop(self.min_right)
+            heapq.heappush(self.max_left, -1 * popped_element)
+
+    def findMedian(self) -> float:
+        total = len(self.min_right) + len(self.max_left)
+
+        if total % 2 == 0:
+            return (self.min_right[0] + (-1 * self.max_left[0])) / 2
+        else:
+            if len(self.max_left) > len(self.min_right):
+                return -1 * self.max_left[0]
+            else:
+                return self.min_right[0]
+
+
 if __name__ == '__main__':
     tasks = ["A","A","A","B","C"]
     n = 2
