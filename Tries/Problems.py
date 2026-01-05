@@ -39,7 +39,7 @@ class PrefixTree:
         cur = self.root
 
         for c in prefix:
-            if not cur.children[c]:
+            if c not in cur.children[c]:
                 return False
 
             cur = cur.children[c]
