@@ -391,4 +391,44 @@ def DFS(self, course, courses, states, order, numCourses):
     order.append(course)
     return True
 
+def validTree(self, n: int, edges: List[List[int]]) -> bool:
+    if len(edges) >= n:
+        return False
+
+    graph = {}
+    stack = []
+    visited = set()
+    parent = {}
+
+    for i in range(n):
+        graph[i] = []
+
+    for edge in edges:
+        u = edge[0]
+        v = edge[1]
+
+        graph[u].append(v)
+        graph[v].append(u)
+
+    parent[0] = None
+    visited.add(0)
+    stack.append(0)
+
+    while stack:
+        node = stack.pop()
+        adjacents = graph[node]
+
+        for adj in adjacents:
+            if adj == parent[node]:
+                continue
+
+            if adj in visited:
+                return False
+
+            visited.add(adj)
+            parent[adj] = node
+            stack.append(adj)
+
+    return len(visited) == n
+
 
