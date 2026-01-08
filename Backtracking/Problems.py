@@ -123,6 +123,40 @@ def subsetsWithDup(self, nums):
     backtrack(0, [])
     return subsets
 
+def exist(self, board: List[List[str]], word: str) -> bool:
+    m = len(board)
+    n = len(board[0])
+    visited = set()
+
+    def backtrack(r, c, idx):
+        if idx == len(word):
+            return True
+
+        if (r < 0 or r >= m) or (c < 0 or c >= n):
+            return False
+
+        if word[idx] != board[r][c] or (r, c) in visited:
+            return False
+
+        visited.add((r, c))
+        up = backtrack(r - 1, c, idx + 1)
+        down = backtrack(r + 1, c, idx + 1)
+        left = backtrack(r, c - 1, idx + 1)
+        right = backtrack(r, c + 1, idx + 1)
+
+        res = up or down or left or right
+        visited.remove((r, c))
+
+        return res
+
+    for i in range(m):
+        for j in range(n):
+            if backtrack(i, j, 0):
+                return True
+
+    return False
+
+
 if '__main__' == __name__:
     candidates = [9, 2, 2, 4, 6, 1, 5]
     target = 8
