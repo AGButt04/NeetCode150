@@ -1,4 +1,4 @@
-def foreignDictionary(self, words: List[str]) -> str:
+def foreignDictionary(self, words) -> str:
     alphabets = {}
     n = len(words)
 
@@ -23,14 +23,14 @@ def foreignDictionary(self, words: List[str]) -> str:
     res = []
     vis = {}
     for char in alphabets.keys():
-        if self.BFS(alphabets, char, res, vis):
+        if self.DFS(alphabets, char, res, vis):
             return ""
 
     res.reverse()
     return "".join(res)
 
 
-def BFS(self, graph, char, res, vis):
+def DFS(self, graph, char, res, vis):
     if char in vis:
         return vis[char]
 
@@ -38,8 +38,9 @@ def BFS(self, graph, char, res, vis):
 
     for adj in graph[char]:
         # Need to run BFS on this now
-        if self.BFS(graph, adj, res, vis):
+        if self.DFS(graph, adj, res, vis):
             return True
 
-    vis[char] = False
+    vis[char] = False # Means we are done exploring this char
     res.append(char)
+    return False
