@@ -432,3 +432,43 @@ def validTree(self, n: int, edges: List[List[int]]) -> bool:
     return len(visited) == n
 
 
+class DSU:
+    def __init__(self, n):
+        self.parent = []
+        self.rank = [1] * n
+
+        for i in range(n):
+            self.parent.append(i)
+
+    def find(self, x):
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])
+
+        return self.parent[x]
+
+    def union(self, x, y):
+        p_x = self.find(x)
+        p_y = self.find(y)
+
+        if p_x == p_y:
+            return
+
+        if self.rank[p_y] > self.rank[p_x]:
+            p_x, p_y = p_y, p_x
+
+        self.parent[p_y] = p_x
+        self.rank[p_x] += self.rank[p_y]
+
+def countComponents(self, n: int, edges) -> int:
+    dsu = self.DSU(n)
+    res = n
+
+    for edge in edges:
+        x = edge[0]
+        y = edge[1]
+
+        dsu.union(x, y)
+        res -= 1
+
+    return res
+
