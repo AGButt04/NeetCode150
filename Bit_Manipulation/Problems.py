@@ -35,5 +35,16 @@ def countBits(n: int):
 
     return ones_array
 
+def missingNumber(self, nums):
+    n = len(nums)
+    r_sum = n
+    c_sum = 0
+
+    for i, n in enumerate(nums):
+        r_sum += i
+        c_sum += n
+
+    return r_sum - c_sum
+
 if __name__ == '__main__':
     print(2 & 1)
