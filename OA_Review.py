@@ -36,11 +36,28 @@ def longestSubarray(nums: list[int], k: int) -> int:
 
     return max_subarray
 
+def lengthOfLongestSubstring(s: str) -> int:
+    map = {}
+    left, right = 0, 0
+    longest_arr = 0
 
+    while right < len(s):
+        char = s[right]
+
+        if char in map:
+            left = max(left, map[char] + 1)
+
+        map[char] = right
+        longest_arr = max(longest_arr, right - left + 1)
+        right += 1
+
+    return longest_arr
+
+def minWindow(s: str, t: str) -> str:
+    
+
+
+    
 
 if __name__ == '__main__':
-    # nums = [1, -1, 5, -2, 3]
-    # k = 3
-    nums = [3, 5, 7]
-    k = 3
-    print(longestSubarray(nums, k))
+    print("Ghani")
